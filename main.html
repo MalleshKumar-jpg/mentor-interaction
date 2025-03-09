@@ -265,13 +265,31 @@
       }
     }
 
+  .input-box[readonly] {
+  background-color: whitesmoke; 
+  border: 1px solid grey; 
+  color: #555;            
+  }
 
+  .summary-input[readonly] {
+    background-color: transparent; /* Match the background to blend in */
+    border: none;                  /* Remove the black border */
+    color: #333;                   /* Ensure text color matches the paragraph */
+    width: 100%;                   /* Stretch to match paragraph width */
+    height: auto;                  /* Fit the content height dynamically */
+    resize: none;                  /* Prevent resizing */
+    overflow-y: auto;              /* Enable scroll if content exceeds height */
+    padding: 0;                    /* Reduce unnecessary padding */
+    box-sizing: border-box;        /* Prevent content overflow */
+    font-size: 1rem;               /* Match the paragraph font size */
+    line-height: 1.5;             
+}
   </style>
 </head>
 
 <body id="main-page">
   <a href="mentor_menteeslist.html?role=mentor">
-    <section class="header">MENTOR</section>
+    <section class="header" id="user-role">MENTOR</section>
   </a>
 
   <div class="sidebar">
@@ -287,31 +305,31 @@
 
       <div class="form-group">
         <label class="form-label" for="name">Name:</label>
-        <input type="text" id="name" class="input-box ">
+        <input type="text" id="name" class="input-box" readonly>
         <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="department">Department:</label>
-        <input type="text" id="department" class="input-box ">
+        <input type="text" id="department" class="input-box" readonly> 
         <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="strengths">Strengths:</label>
-        <input type="text" id="strengths" class="input-box">
+        <input type="text" id="strengths" class="input-box" readonly>
         <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="weakness">Weakness:</label>
-        <input type="text" id="weakness" class="input-box">
+        <input type="text" id="weakness" class="input-box" readonly>
         <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="goals">Goals:</label>
-        <input type="text" id="goals" class="input-box">
+        <input type="text" id="goals" class="input-box" readonly>
         <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
@@ -322,18 +340,18 @@
       <h2>PROGRESS TRACKING</h2>
       
       <div class="task-container">
-          <span class="input-box">Task 1</span>
-          <input type="date" class="input-date">
-          <button class="edit-btn mentor-only-btn">Edit</button>
-          <button class="delete-task mentor-only-btn">X</button>
+        <input type="text" class="input-box" value="Task 1" readonly>
+        <input type="date" class="input-date">
+        <button class="edit-btn mentor-only-btn">Edit</button>
+        <button class="delete-task mentor-only-btn">X</button>
       </div>
   
-      <div class="task-container">
-          <span class="input-box">Task 2</span>
-          <input type="date" class="input-date">
-          <button class="edit-btn mentor-only-btn">Edit</button>
-          <button class="delete-task mentor-only-btn">X</button>
-      </div>
+    <div class="task-container">
+      <input type="text" class="input-box" value="Task 2" readonly>
+      <input type="date" class="input-date">
+      <button class="edit-btn mentor-only-btn">Edit</button>
+      <button class="delete-task mentor-only-btn">X</button>
+    </div>
   
       <div class="task-container add-task-container mentor-only-container">
           <input class="input-box" placeholder="Add Task">
@@ -345,39 +363,41 @@
     <div id="notes" class="notes-container content">
       <h2>MEETING HISTORY</h2>
       <div class="meeting-history">
-          <div class="meeting-card">
-              <h3>24/2/25</h3>
-              <button class="edit-note mentor-only-btn">
-                  <img src="images/pencil_edit.png" alt="Edit">
-              </button>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci at saepe mollitia sed. Veniam eveniet
-                  eos, ipsa facere, corporis quae exercitationem perferendis temporibus ipsum delectus error vitae quasi?
-                  Delectus deserunt optio velit expedita, explicabo veniam consectetur sunt incidunt nostrum porro
-                  necessitatibus praesentium dolorem iure molestiae assumenda illum sequi in nulla voluptates dolores illo
-                  recusandae provident non dolore!</p>
-          </div>
+        
   
           <div class="meeting-card">
-              <h3>25/2/25</h3>
-              <button class="edit-note mentor-only-btn">
-                  <img src="images/pencil_edit.png" alt="Edit">
-              </button>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas, dignissimos. Rem molestiae assumenda velit
-                  quidem ipsa tempora suscipit nobis nostrum pariatur vitae possimus earum, unde excepturi porro, animi quam,
-                  obcaecati rerum blanditiis eum adipisci libero dignissimos neque!</p>
+            <input type="date" class="input-date" value="2025-02-24" readonly>
+            <button class="edit-note mentor-only-btn">
+              <img src="images/pencil_edit.png" alt="Edit">
+            </button>
+            <textarea rows="10" class="summary-input" readonly>
+                During this session, the mentor reviewed the mentee's progress on assigned tasks, identifying key challenges faced in completing goals. Strategies for improving time management were discussed, ensuring the mentee could better manage their workload. As a result, the mentor set a new deadline for the pending project report and scheduled a follow-up session for detailed project feedback.
+            </textarea>
           </div>
-  
+        
           <div class="meeting-card">
-              <h3>26/2/25</h3>
-              <button class="edit-note mentor-only-btn">
-                  <img src="images/pencil_edit.png" alt="Edit">
-              </button>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <input type="date" class="input-date" value="2025-02-25" readonly>
+            <button class="edit-note mentor-only-btn">
+              <img src="images/pencil_edit.png" alt="Edit">
+            </button>
+            <textarea rows="10" class="summary-input" readonly>
+              In this meeting, the mentor introduced the mentee to new learning resources for coding practice and demonstrated effective note-taking techniques to improve study habits. They also provided guidance on how to prioritize tasks efficiently. By the end of the session, the mentee committed to completing two coding exercises before the next meeting, while the mentor agreed to provide additional resources based on the mentee's progress.
+            </textarea>
+          </div>
+        
+          <div class="meeting-card">
+            <input type="date" class="input-date" value="2025-02-26" readonly>
+            <button class="edit-note mentor-only-btn">
+              <img src="images/pencil_edit.png" alt="Edit">
+            </button>
+            <textarea rows="10" class="summary-input" readonly>
+              This session focused on preparing the mentee for an upcoming internship interview. The mentor conducted a mock interview to build the mentee's confidence and provided tips for improving communication skills. Additionally, the mentor reviewed the mentee's updated resume, offering constructive feedback for improvements. The mentee was advised to refine their resume and submit it for further review before the next session, which will focus on common technical interview questions.
+            </textarea>
           </div>
   
           <div class="meeting-card-input mentor-only-container">
               <input class="input-date" type="date">
-              <textarea class="summary-input" cols="30" rows="10" placeholder="Enter new meeting summary"></textarea>
+              <textarea class="summary-input" rows="10" placeholder="Enter new meeting summary"></textarea>
               <button class="save-btn" style="margin-top: 10px; width: 100%;">Save Meeting</button>
           </div>
       </div>
