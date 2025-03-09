@@ -37,16 +37,20 @@
             width: 120px;
             margin: 20px auto;
             padding: 10px;
-            background: darkblue;
+            background: blue;
             color: white;
             border: none;
             border-radius: 20px;
             cursor: pointer;
             text-align: center;
+            transition: all 0.3s;
         }
-        .signup-link {
-            text-align: center;
+
+        .login-button:hover {
+            background-color: navy;
+            text-decoration: none;
         }
+        
         a {
             color: #000;
             text-decoration: none;
@@ -68,10 +72,7 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" class="login-button"><a href="mentor_menteeslist.html" style="color: white;" >Log in</a></button>
-            <div class="signup-link">
-                <a href="signin.html">Don't have an account? Sign Up</a>
-            </div>
+            <a href="mentor_menteeslist.html" class="login-button">Log in</a>
         </form>
     </div>
 </body>
