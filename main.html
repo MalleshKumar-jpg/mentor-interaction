@@ -195,9 +195,14 @@
     }
 
     .summary-input {
+      width: 100%;    
       background-color: lightgray;
       outline: 0;
       resize: none;
+      box-sizing: border-box;
+      padding: 10px;   
+      border-radius: 5px; 
+      border: 2px solid black;
     }
 
     h2 {
@@ -233,6 +238,13 @@
       font-size: 16px;
     }
 
+    .edit-note img {
+    width: 20px; 
+    height: 20px; 
+    object-fit: contain;
+    cursor: pointer;
+}
+
     @media (max-width: 768px) {
 
       .form-group,
@@ -252,11 +264,13 @@
         max-width: 100%;
       }
     }
+
+
   </style>
 </head>
 
-<body>
-  <a href="mentor_menteeslist.html">
+<body id="main-page">
+  <a href="mentor_menteeslist.html?role=mentor">
     <section class="header">MENTOR</section>
   </a>
 
@@ -273,88 +287,102 @@
 
       <div class="form-group">
         <label class="form-label" for="name">Name:</label>
-        <input type="text" id="name" class="input-box">
-        <button class="edit-btn">Edit</button>
+        <input type="text" id="name" class="input-box ">
+        <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="department">Department:</label>
-        <input type="text" id="department" class="input-box">
-        <button class="edit-btn">Edit</button>
+        <input type="text" id="department" class="input-box ">
+        <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="strengths">Strengths:</label>
         <input type="text" id="strengths" class="input-box">
-        <button class="edit-btn">Edit</button>
+        <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="weakness">Weakness:</label>
         <input type="text" id="weakness" class="input-box">
-        <button class="edit-btn">Edit</button>
+        <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="goals">Goals:</label>
         <input type="text" id="goals" class="input-box">
-        <button class="edit-btn">Edit</button>
+        <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
-      <button class="save-btn">Save Changes</button>
+      <button class="save-btn mentee-only-btn">Save Changes</button>
     </div>
 
     <div id="progress" class="progress-container content">
       <h2>PROGRESS TRACKING</h2>
+      
       <div class="task-container">
-        <span class="input-box">Task 1</span>
-        <input type="date" class="input-date">
-        <button class="edit-btn">Edit</button>
-        <button class="delete-task">X</button>
+          <span class="input-box">Task 1</span>
+          <input type="date" class="input-date">
+          <button class="edit-btn mentor-only-btn">Edit</button>
+          <button class="delete-task mentor-only-btn">X</button>
       </div>
+  
       <div class="task-container">
-        <span class="input-box">Task 2</span>
-        <input type="date" class="input-date">
-        <button class="edit-btn">Edit</button>
-        <button class="delete-task">X</button>
+          <span class="input-box">Task 2</span>
+          <input type="date" class="input-date">
+          <button class="edit-btn mentor-only-btn">Edit</button>
+          <button class="delete-task mentor-only-btn">X</button>
       </div>
-      <div class="task-container">
-        <input class="input-box" placeholder="Add Task">
-        <input type="date" class="input-date">
+  
+      <div class="task-container add-task-container mentor-only-container">
+          <input class="input-box" placeholder="Add Task">
+          <input type="date" class="input-date">
       </div>
-
-      <button class="save-btn">Save Tasks</button>
+      <button class="save-btn mentor-only-btn">Save Tasks</button>
     </div>
-
+    
     <div id="notes" class="notes-container content">
       <h2>MEETING HISTORY</h2>
       <div class="meeting-history">
-        <div class="meeting-card">
-          <h3>24/2/25</h3>
-          <button class="edit-note">✏️</button>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci at saepe mollitia sed. Veniam eveniet
-            eos, ipsa facere, corporis quae exercitationem perferendis temporibus ipsum delectus error vitae quasi?
-            Delectus deserunt optio velit expedita, explicabo veniam consectetur sunt incidunt nostrum porro
-            necessitatibus praesentium dolorem iure molestiae assumenda illum sequi in nulla voluptates dolores illo
-            recusandae provident non dolore!</p>
-        </div>
-
-        <div class="meeting-card">
-          <h3>25/2/25</h3>
-          <button class="edit-note">✏️</button>
-          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas, dignissimos. Rem molestiae assumenda velit
-            quidem ipsa tempora suscipit nobis nostrum pariatur vitae possimus earum, unde excepturi porro, animi quam,
-            obcaecati rerum blanditiis eum adipisci libero dignissimos neque!</p>
-        </div>
-
-        <div class="meeting-card-input">
-          <input class="input-date" type="date">
-          <textarea class="summary-input" cols="30" rows="10" placeholder="Enter new meeting summary"></textarea>
-          <button class="save-btn" style="margin-top: 10px; width: 100%;">Save Meeting</button>
-        </div>
+          <div class="meeting-card">
+              <h3>24/2/25</h3>
+              <button class="edit-note mentor-only-btn">
+                  <img src="images/pencil_edit.png" alt="Edit">
+              </button>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci at saepe mollitia sed. Veniam eveniet
+                  eos, ipsa facere, corporis quae exercitationem perferendis temporibus ipsum delectus error vitae quasi?
+                  Delectus deserunt optio velit expedita, explicabo veniam consectetur sunt incidunt nostrum porro
+                  necessitatibus praesentium dolorem iure molestiae assumenda illum sequi in nulla voluptates dolores illo
+                  recusandae provident non dolore!</p>
+          </div>
+  
+          <div class="meeting-card">
+              <h3>25/2/25</h3>
+              <button class="edit-note mentor-only-btn">
+                  <img src="images/pencil_edit.png" alt="Edit">
+              </button>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas, dignissimos. Rem molestiae assumenda velit
+                  quidem ipsa tempora suscipit nobis nostrum pariatur vitae possimus earum, unde excepturi porro, animi quam,
+                  obcaecati rerum blanditiis eum adipisci libero dignissimos neque!</p>
+          </div>
+  
+          <div class="meeting-card">
+              <h3>26/2/25</h3>
+              <button class="edit-note mentor-only-btn">
+                  <img src="images/pencil_edit.png" alt="Edit">
+              </button>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          </div>
+  
+          <div class="meeting-card-input mentor-only-container">
+              <input class="input-date" type="date">
+              <textarea class="summary-input" cols="30" rows="10" placeholder="Enter new meeting summary"></textarea>
+              <button class="save-btn" style="margin-top: 10px; width: 100%;">Save Meeting</button>
+          </div>
       </div>
     </div>
   </div>
+  <script src="script.js"></script>
 </body>
-
 </html>

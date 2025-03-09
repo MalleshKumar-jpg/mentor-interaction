@@ -60,10 +60,10 @@
         }
     </style>
 </head>
-<body>
+<body id="login-page">
     <div class="login-container">
     <h2 style="text-decoration:underline">LOGIN</h2>
-        <form>
+        <form id="login-form">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -72,8 +72,11 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <a href="mentor_menteeslist.html" class="login-button">Log in</a>
+            <input type="hidden" id="role">
+
+            <button type="submit" class="login-button">Log in</button>
         </form>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

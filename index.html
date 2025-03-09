@@ -50,16 +50,22 @@
         .button:hover {
             opacity: 0.8;
         }
+        a{
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">MENTOREE</div>
         <div class="login-title">LOG IN</div>
-        <a href="login.html">
+        <a href="login.html?role=mentor">
             <button class="button">I am a Mentor</button>
         </a>
-        <button class="button">I am a Mentee</button>
+        <a href="login.html?role=mentee">
+            <button class="button">I am a Mentee</button>
+        </a>    
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
