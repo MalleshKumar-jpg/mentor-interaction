@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Progress Tracking</title>
+  <style>
+    * {
+      font-family: Verdana, Tahoma, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      width: 200px;
+      border-right: 2px solid black;
+      height: 100vh;
+      padding-top: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      overflow-y: auto;
+      background-color: darkgreen;
+      z-index: 1000;
+    }
+
+    .sidebar a {
+      display: block;
+      width: 100%;
+      padding: 20px;
+      background-color: green;
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: left;
+      transition: all 0.4s;
+    }
+
+    .sidebar a:hover {
+      background-color: greenyellow;
+      color: black;
+    }
+
+    .sidebar #mentee-name {
+      align-self: center;
+      color: yellow;
+    }
+
+    .main-content {
+      margin-left: 200px;
+      flex-grow: 1;
+      padding: 20px;
+    }
+
+    .header {
+      background: darkblue;
+      color: white;
+      padding: 20px;
+      top: 0;
+      font-weight: bold;
+      width: 100%;
+      position: fixed;
+      text-align: center;
+      font-size: 25px;
+      z-index: 4;
+    }
+
+    .content {
+      display: none;
+    }
+
+    #details:target,
+    #progress:target,
+    #notes:target {
+      display: block;
+    }
+
+    .details-container,
+    .progress-container,
+    .notes-container {
+      margin-top: 20px;
+      text-align: left;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .details-container p,
+    .progress-container p {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .task-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .input-box {
+      display: inline-block;
+      background-color: lightgray;
+      padding: 10px;
+      border-radius: 5px;
+      min-width: 300px;
+      font-weight: bold;
+    }
+
+    .meeting-history {
+      display: grid;
+      gap: 20px;
+      justify-content: center;
+    }
+    
+    .meeting-card {
+      background-color: lightgray;
+      padding: 20px;
+      border-radius: 10px;
+      width: auto;
+      text-align: left;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.5s ease-in-out;
+      z-index: 2;
+    }
+
+    .meeting-card:hover {
+      transform: scale(1.05);
+      background-color: aliceblue;
+      z-index: inherit;
+    }
+
+    .meeting-card-input{
+    background-color: lightgray;
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    text-align: left;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .input-date {
+      font-size: 18px;
+      display: inline-block;
+      background-color: lightgray;
+      justify-self: baseline;
+      padding: 2px;
+      border-radius: 5px;
+      max-width: 300px;
+      font-weight: bold;
+    }
+
+    .summary-input {
+      background-color: lightgray;
+      outline: 0px;
+    }
+
+    textarea{
+      resize: none;
+    }
+
+    .input-container {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .edit-icon {
+      position: absolute;
+      right: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="mentor_menteeslist.html"><section class="header">MENTEE</section></a>
+  <div class="sidebar">
+    <a href="#details">DETAILS</a>
+    <a href="#progress">PROGRESS TRACKING</a>
+    <a href="#notes">MEETING NOTES</a>
+    <p id="mentee-name">MENTEE 1</p>
+  </div>
+  <div class="main-content">
+    <div id="details" class="details-container content">
+        <h2>DETAILS</h2>
+        <label for="name">Name:</label>
+        <div class="input-container">
+          <input type="text" class="input-box">
+          <button class="edit-icon">✏️</button>
+        </div><br><br>
+        <label for="department">Department:</label>
+        <div class="input-container">
+          <input type="text" class="input-box">
+          <button class="edit-icon">✏️</button>
+        </div><br><br>
+        <label for="strengths">Strengths:</label>
+        <div class="input-container">
+          <input type="text" class="input-box">
+          <button class="edit-icon">✏️</button>
+        </div><br><br>
+        <label for="weakness">Weakness:</label>
+        <div class="input-container">
+          <input type="text" class="input-box">
+          <button class="edit-icon">✏️</button>
+        </div><br><br>
+        <label for="goals">Goals:</label>
+        <div class="input-container">
+          <input type="text" class="input-box">
+          <button class="edit-icon">✏️</button>
+        </div><br><br>
+      </div>
+    <div id="progress" class="progress-container content">
+      <h2 style="text-decoration:underline">PROGRESS TRACKING</h2>
+      <div class="task-container">
+        <span class="input-box">Task 1</span>
+        <input type="date" class="input-date"><br><br>
+      </div>
+      <div class="task-container">
+        <span class="input-box">Task 2</span>
+        <input type="date" class="input-date"><br><br>
+      </div>
+      <div class="task-container">
+        <input class="input-box" placeholder="Add Task">
+        <input type="date" class="input-date">
+      </div>
+    </div>
+    <div id="notes" class="notes-container content">
+      <h2>MEETING HISTORY</h2>
+      <div class="meeting-history">
+        <div class="meeting-card">
+          <h3>24/2/25</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci at saepe mollitia sed. Veniam eveniet
+            eos, ipsa facere, corporis quae exercitationem perferendis temporibus ipsum delectus error vitae quasi?
+            Delectus deserunt optio velit expedita, explicabo veniam consectetur sunt incidunt nostrum porro
+            necessitatibus praesentium dolorem iure molestiae assumenda illum sequi in nulla voluptates dolores illo
+            recusandae provident non dolore! Fugiat corporis architecto numquam, commodi dolorem eligendi voluptatem
+            molestias at quidem reprehenderit explicabo beatae veniam deleniti, quibusdam sunt repellat asperiores
+            maxime voluptate quam sapiente ut, eius repellendus inventore? Maxime consequuntur accusamus debitis porro
+            exercitationem a sed totam, asperiores numquam, officiis quo illum commodi?</p>
+        </div>
+        <div class="meeting-card">
+          <h3>25/2/25</h3>
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas, dignissimos. Rem molestiae assumenda velit
+            quidem ipsa tempora suscipit nobis nostrum pariatur vitae possimus earum, unde excepturi porro, animi quam,
+            obcaecati rerum blanditiis eum adipisci libero dignissimos neque! Fugiat, omnis eligendi. Laboriosam,
+            dolores! Sint asperiores assumenda itaque maxime voluptates corrupti cupiditate enim facilis omnis totam
+            reprehenderit fugit non, debitis, nulla hic perspiciatis. Eaque iure eligendi recusandae architecto sunt
+            culpa, ab obcaecati, enim, commodi dolor error eius cumque accusantium. Officiis, excepturi nemo?
+            Perferendis aperiam omnis illo quae. Voluptates minus repellendus voluptatem praesentium nisi aliquam
+            corporis vitae quas nemo aut magni, aspernatur nesciunt?</p>
+        </div>
+        <div class="meeting-card-input">
+          <input class="input-date" type="date">
+          <textarea class="summary-input" cols="30" rows="10" placeholder="Enter new meeting summary"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>

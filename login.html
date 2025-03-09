@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+        .form-group {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        label {
+            width: 100px;
+            text-align: right;
+            margin-right: 20px;
+        }
+        input {
+            padding: 10px;
+            border: none;
+            background-color: lightgray;
+            border-radius: 20px;
+        }
+        .login-button {
+            display: block;
+            width: 120px;
+            margin: 20px auto;
+            padding: 10px;
+            background: darkblue;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .signup-link {
+            text-align: center;
+        }
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+    <h2 style="text-decoration:underline">LOGIN</h2>
+        <form>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="login-button"><a href="mentor_menteeslist.html" style="color: white;" >Log in</a></button>
+            <div class="signup-link">
+                <a href="signin.html">Don't have an account? Sign Up</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

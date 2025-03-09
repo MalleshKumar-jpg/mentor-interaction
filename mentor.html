@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Progress Tracking</title>
+  <style>
+    * {
+      font-family: Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 200px;
+      height: 100vh;
+      position: fixed;
+      background-color: darkgreen;
+      display: flex;
+      flex-direction: column;
+      border-right: 2px solid black;
+      padding-top: 54px;
+      overflow-y: auto;
+    }
+
+    .sidebar a {
+      padding: 20px;
+      background-color: green;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.4s;
+      border-top: 1px solid black;
+    }
+
+    .sidebar a:hover {
+      background-color: greenyellow;
+      color: black;
+    }
+
+    #mentee-name {
+      text-align: center;
+      padding: 20px;
+      background-color: lavender;
+      color: black;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .main-content {
+      margin-left: 200px;
+      flex-grow: 1;
+      padding: 20px;
+    }
+
+    .header {
+      background: darkblue;
+      color: white;
+      padding: 20px;
+      position: fixed;
+      width: 100%;
+      text-align: center;
+      font-size: 25px;
+      font-weight: bold;
+      top: 0;
+      z-index: 100;
+    }
+
+    .content {
+      display: none;
+      margin-top: 80px;
+    }
+
+    #details:target,
+    #progress:target,
+    #notes:target {
+      display: block;
+    }
+
+    .details-container,
+    .progress-container,
+    .notes-container {
+      max-width: 600px;
+      margin: 20px auto 0;
+      text-align: left;
+    }
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .form-label {
+      font-weight: bold;
+      margin-right: auto;
+    }
+
+    .input-box {
+      background-color: lightgray;
+      padding: 10px;
+      border-radius: 5px;
+      width: 300px;
+      font-weight: bold;
+      border: 1px solid #ccc;
+      margin-right: 10px;
+    }
+
+    .edit-btn {
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .edit-btn:hover {
+      background-color: #e0e0e0;
+    }
+
+    .save-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      margin: 20px 0;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .save-btn:hover {
+      background-color: #45a049;
+    }
+
+    .task-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .task-container .input-box {
+      flex: 1;
+      min-width: 250px;
+      max-width: 300px;
+    }
+
+    .meeting-history {
+      display: grid;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .meeting-card {
+      background-color: lightgray;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+      transition: 0.5s;
+      position: relative;
+      z-index: 2;
+    }
+
+    .meeting-card:hover {
+      transform: scale(1.05);
+      background-color: aliceblue;
+    }
+
+    .meeting-card-input {
+      background-color: lightgray;
+      padding: 20px;
+      border-radius: 10px;
+      width: 250px;
+      text-align: left;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .input-date {
+      font-size: 18px;
+      background-color: lightgray;
+      padding: 2px;
+      border-radius: 5px;
+      max-width: 150px;
+      font-weight: bold;
+    }
+
+    .summary-input {
+      background-color: lightgray;
+      outline: 0;
+      resize: none;
+    }
+
+    h2 {
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 80px;
+      color: black;
+      z-index: 10;
+    }
+
+    .delete-task {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .edit-note {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+
+      .form-group,
+      .task-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .form-label {
+        width: 100%;
+        margin-bottom: 5px;
+      }
+
+      .input-box,
+      .task-container .input-box {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="mentor_menteeslist.html">
+    <section class="header">MENTOR</section>
+  </a>
+
+  <div class="sidebar">
+    <p id="mentee-name">MENTEE 1</p>
+    <a href="#details">DETAILS</a>
+    <a href="#progress">PROGRESS TRACKING</a>
+    <a href="#notes">MEETING NOTES</a>
+  </div>
+
+  <div class="main-content">
+    <div id="details" class="details-container content">
+      <h2>DETAILS</h2>
+
+      <div class="form-group">
+        <label class="form-label" for="name">Name:</label>
+        <input type="text" id="name" class="input-box">
+        <button class="edit-btn">Edit</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="department">Department:</label>
+        <input type="text" id="department" class="input-box">
+        <button class="edit-btn">Edit</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="strengths">Strengths:</label>
+        <input type="text" id="strengths" class="input-box">
+        <button class="edit-btn">Edit</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="weakness">Weakness:</label>
+        <input type="text" id="weakness" class="input-box">
+        <button class="edit-btn">Edit</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="goals">Goals:</label>
+        <input type="text" id="goals" class="input-box">
+        <button class="edit-btn">Edit</button>
+      </div>
+
+      <button class="save-btn">Save Changes</button>
+    </div>
+
+    <div id="progress" class="progress-container content">
+      <h2>PROGRESS TRACKING</h2>
+      <div class="task-container">
+        <span class="input-box">Task 1</span>
+        <input type="date" class="input-date">
+        <button class="edit-btn">Edit</button>
+        <button class="delete-task">X</button>
+      </div>
+      <div class="task-container">
+        <span class="input-box">Task 2</span>
+        <input type="date" class="input-date">
+        <button class="edit-btn">Edit</button>
+        <button class="delete-task">X</button>
+      </div>
+      <div class="task-container">
+        <input class="input-box" placeholder="Add Task">
+        <input type="date" class="input-date">
+      </div>
+
+      <button class="save-btn">Save Tasks</button>
+    </div>
+
+    <div id="notes" class="notes-container content">
+      <h2>MEETING HISTORY</h2>
+      <div class="meeting-history">
+        <div class="meeting-card">
+          <h3>24/2/25</h3>
+          <button class="edit-note">✏️</button>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci at saepe mollitia sed. Veniam eveniet
+            eos, ipsa facere, corporis quae exercitationem perferendis temporibus ipsum delectus error vitae quasi?
+            Delectus deserunt optio velit expedita, explicabo veniam consectetur sunt incidunt nostrum porro
+            necessitatibus praesentium dolorem iure molestiae assumenda illum sequi in nulla voluptates dolores illo
+            recusandae provident non dolore!</p>
+        </div>
+
+        <div class="meeting-card">
+          <h3>25/2/25</h3>
+          <button class="edit-note">✏️</button>
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas, dignissimos. Rem molestiae assumenda velit
+            quidem ipsa tempora suscipit nobis nostrum pariatur vitae possimus earum, unde excepturi porro, animi quam,
+            obcaecati rerum blanditiis eum adipisci libero dignissimos neque!</p>
+        </div>
+
+        <div class="meeting-card-input">
+          <input class="input-date" type="date">
+          <textarea class="summary-input" cols="30" rows="10" placeholder="Enter new meeting summary"></textarea>
+          <button class="save-btn" style="margin-top: 10px; width: 100%;">Save Meeting</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentoree Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: white;
+        }
+
+        .container {
+            text-align: center;
+            width: 400px;
+            border: 2px solid purple;
+            border-radius: 8px;
+            padding-bottom: 50px;
+        }
+        
+        .header {
+            background: linear-gradient(to right, black, blue);
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .login-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 40px 0;
+        }
+        .button {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            color: white;
+            background: linear-gradient(to right, black, blue);
+            cursor: pointer;
+        }
+        .button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">MENTOREE</div>
+        <div class="login-title">LOG IN</div>
+        <a href="login.html">
+            <button class="button">I am a Mentor</button>
+        </a>
+        <button class="button">I am a Mentee</button>
+    </div>
+</body>
+</html>
