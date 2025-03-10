@@ -57,19 +57,17 @@ function toggleEditMode(button) {
     const meetingCard = button.closest('.meeting-card');
     const noteContent = meetingCard.querySelector('.note-content');
 
-    if (button.textContent === '✏️ Edit') {
-        const textarea = document.createElement('textarea');
-        textarea.value = noteContent.textContent;
-        meetingCard.replaceChild(textarea, noteContent);
-        button.textContent = '💾 Save';
+    if (button.textContent === '✏️') {
+        noteContent.contentEditable = 'true'; 
+        noteContent.focus(); 
+        noteContent.style.border = '2px solid #4CAF50'; 
+        button.textContent = '💾';
     } else {
-        const updatedNote = document.createElement('p');
-        updatedNote.textContent = meetingCard.querySelector('textarea').value;
-        meetingCard.replaceChild(updatedNote, meetingCard.querySelector('textarea'));
-        button.textContent = '✏️ Edit'; 
+        noteContent.contentEditable = 'false';  
+        noteContent.style.border = 'none';
+        button.textContent = '✏️'
     }
 }
-
 document.querySelectorAll('.edit-btn').forEach(button => {
     button.addEventListener('click', () => toggleEditMode(button));
 });
@@ -84,7 +82,7 @@ function addNewMeeting() {
         newMeetingCard.innerHTML = `
             <h3>${meetingDate}</h3>
             <p class="note-content">${meetingSummary}</p>
-            <button class="edit-btn">✏️ Edit</button>
+            <button class="edit-btn">✏️</button>
         `;
         document.querySelector('#meeting-history').appendChild(newMeetingCard);
         newMeetingCard.querySelector('.edit-btn').addEventListener('click', () => toggleEditMode(newMeetingCard.querySelector('.edit-btn')));
