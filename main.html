@@ -265,13 +265,31 @@
       }
     }
 
+  .input-box[readonly] {
+  background-color: whitesmoke; 
+  border: 1px solid grey; 
+  color: #555;            
+  }
 
+  .summary-input[readonly] {
+    background-color: transparent; /* Match the background to blend in */
+    border: none;                  /* Remove the black border */
+    color: #333;                   /* Ensure text color matches the paragraph */
+    width: 100%;                   /* Stretch to match paragraph width */
+    height: auto;                  /* Fit the content height dynamically */
+    resize: none;                  /* Prevent resizing */
+    overflow-y: auto;              /* Enable scroll if content exceeds height */
+    padding: 0;                    /* Reduce unnecessary padding */
+    box-sizing: border-box;        /* Prevent content overflow */
+    font-size: 1rem;               /* Match the paragraph font size */
+    line-height: 1.5;             
+}
   </style>
 </head>
 
 <body id="main-page">
   <a href="mentor_menteeslist.html?role=mentor">
-    <section class="header">MENTOR</section>
+    <section class="header" id="user-role">MENTOR</section>
   </a>
 
   <div class="sidebar">
@@ -287,31 +305,31 @@
 
       <div class="form-group">
         <label class="form-label" for="name">Name:</label>
-        <input type="text" id="name" class="input-box ">
+        <input type="text" id="name" class="input-box" readonly>
         <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="department">Department:</label>
-        <input type="text" id="department" class="input-box ">
+        <input type="text" id="department" class="input-box" readonly> 
         <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="strengths">Strengths:</label>
-        <input type="text" id="strengths" class="input-box">
+        <input type="text" id="strengths" class="input-box" readonly>
         <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="weakness">Weakness:</label>
-        <input type="text" id="weakness" class="input-box">
+        <input type="text" id="weakness" class="input-box" readonly>
         <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="goals">Goals:</label>
-        <input type="text" id="goals" class="input-box">
+        <input type="text" id="goals" class="input-box" readonly>
         <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
@@ -322,18 +340,18 @@
       <h2>PROGRESS TRACKING</h2>
       
       <div class="task-container">
-          <span class="input-box">Task 1</span>
-          <input type="date" class="input-date">
-          <button class="edit-btn mentor-only-btn">Edit</button>
-          <button class="delete-task mentor-only-btn">X</button>
+        <input type="text" class="input-box" value="Task 1" readonly>
+        <input type="date" class="input-date">
+        <button class="edit-btn mentor-only-btn">Edit</button>
+        <button class="delete-task mentor-only-btn">X</button>
       </div>
   
-      <div class="task-container">
-          <span class="input-box">Task 2</span>
-          <input type="date" class="input-date">
-          <button class="edit-btn mentor-only-btn">Edit</button>
-          <button class="delete-task mentor-only-btn">X</button>
-      </div>
+    <div class="task-container">
+      <input type="text" class="input-box" value="Task 2" readonly>
+      <input type="date" class="input-date">
+      <button class="edit-btn mentor-only-btn">Edit</button>
+      <button class="delete-task mentor-only-btn">X</button>
+    </div>
   
       <div class="task-container add-task-container mentor-only-container">
           <input class="input-box" placeholder="Add Task">
@@ -344,18 +362,19 @@
     
     <div id="notes" class="notes-container content">
       <h2>MEETING HISTORY</h2>
-      <div id="meeting-history">
-          <div class="meeting-card" id="meeting1">
-              <h3>24/2/25</h3>
-              <p class="note-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <button class="edit-btn">✏️ Edit</button>
-          </div>
-          <div class="meeting-card" id="meeting2">
-              <h3>25/2/25</h3>
-              <p class="note-content">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <button class="edit-btn">✏️ Edit</button>
-          </div>
-      </div>
+    <div id="meeting-history">
+        <div class="meeting-card" id="meeting1">
+            <h3>2025-02-24</h3>
+            <p class="note-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <button class="edit-btn">✏️ Edit</button>
+        </div>
+
+        <div class="meeting-card" id="meeting2">
+            <h3>2025-02-26</h3>
+            <p class="note-content">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <button class="edit-btn">✏️ Edit</button>
+        </div>
+    </div>
       <h3>Add New Meeting</h3>
       <input type="date" id="meeting-date" class="input-date">
       <textarea id="meeting-summary" class="summary-input" placeholder="Enter meeting notes"></textarea>
