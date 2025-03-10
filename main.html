@@ -173,6 +173,8 @@
       margin-bottom: 10px;
       position: relative;
       z-index: 2;
+      max-height: 200px;     
+      overflow-y: auto;         
     }
 
     .meeting-card:hover {
@@ -189,7 +191,8 @@
       box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
     }
 
-    .input-date {
+    .input-date,
+    .meeting-date {
       font-size: 18px;
       background-color: lightgray;
       padding: 2px;
@@ -199,13 +202,13 @@
     }
 
     .summary-input {
-      width: 100%;    
+      width: 100%;
       background-color: lightgray;
       outline: 0;
       resize: none;
       box-sizing: border-box;
-      padding: 10px;   
-      border-radius: 5px; 
+      padding: 10px;
+      border-radius: 5px;
       border: 2px solid black;
     }
 
@@ -243,11 +246,11 @@
     }
 
     .edit-note img {
-    width: 20px; 
-    height: 20px; 
-    object-fit: contain;
-    cursor: pointer;
-}
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      cursor: pointer;
+    }
 
     @media (max-width: 768px) {
 
@@ -269,6 +272,7 @@
       }
     }
 
+<<<<<<< Updated upstream
   .input-box[readonly] {
   background-color: whitesmoke; 
   border: 1px solid grey; 
@@ -288,6 +292,35 @@
     font-size: 1rem;               /* Match the paragraph font size */
     line-height: 1.5;             
 }
+=======
+    .add-task {
+      background-color: green;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .input-box[readonly],
+    .input-date[readonly] {
+      background-color: whitesmoke;
+      border: 1px solid grey;
+      color: #555;
+    }
+
+    .meeting-date[readonly] {
+      background-color: transparent;
+      border: none;
+      cursor: default;
+    }
+>>>>>>> Stashed changes
   </style>
 </head>
 
@@ -309,13 +342,21 @@
 
       <div class="form-group">
         <label class="form-label" for="name">Name:</label>
+<<<<<<< Updated upstream
         <input type="text" id="name" class="input-box" readonly>
+=======
+        <input type="text" id="name" class="input-box " readonly>
+>>>>>>> Stashed changes
         <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="department">Department:</label>
+<<<<<<< Updated upstream
         <input type="text" id="department" class="input-box" readonly> 
+=======
+        <input type="text" id="department" class="input-box " readonly>
+>>>>>>> Stashed changes
         <button class="edit-btn mentee-only-btn">Edit</button>
       </div>
 
@@ -342,8 +383,9 @@
 
     <div id="progress" class="progress-container content">
       <h2>PROGRESS TRACKING</h2>
-      
+
       <div class="task-container">
+<<<<<<< Updated upstream
         <input type="text" class="input-box" value="Task 1" readonly>
         <input type="date" class="input-date">
         <button class="edit-btn mentor-only-btn">Edit</button>
@@ -357,15 +399,34 @@
       <button class="delete-task mentor-only-btn">X</button>
     </div>
   
+=======
+        <input type="text" class="input-box task-name" value="Task 1" readonly>
+        <input type="date" class="input-date" readonly>
+        <button class="edit-btn mentor-only-btn">Edit</button>
+        <button class="delete-task mentor-only-btn">X</button>
+      </div>
+
+
+      <div class="task-container">
+        <input type="text" class="input-box task-name" value="Task 2" readonly>
+        <input type="date" class="input-date" readonly>
+        <button class="edit-btn mentor-only-btn">Edit</button>
+        <button class="delete-task mentor-only-btn">X</button>
+      </div>
+
+
+>>>>>>> Stashed changes
       <div class="task-container add-task-container mentor-only-container">
-          <input class="input-box" placeholder="Add Task">
-          <input type="date" class="input-date">
+        <input class="input-box" placeholder="Add Task">
+        <input type="date" class="input-date">
+        <button class="add-task mentor-only-btn">+</button>
       </div>
       <button class="save-btn mentor-only-btn">Save Tasks</button>
     </div>
-    
+
     <div id="notes" class="notes-container content">
       <h2>MEETING HISTORY</h2>
+<<<<<<< Updated upstream
     <div id="meeting-history">
         <div class="meeting-card" id="meeting1">
             <h3>2025-02-24</h3>
@@ -386,6 +447,77 @@
     </div>
   </div>
   </body>
+=======
+      <div class="meeting-history">
+        <div class="meeting-card">
+          <div class="meeting-header">
+              <input type="date" class="meeting-date" value="2025-02-24" readonly>
+              <button class="edit-note mentor-only-btn">
+                  <img src="images/pencil_edit.png" alt="Edit">
+              </button>
+          </div>
+          <div class="meeting-content">
+              <p>Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
+                clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
+                mentee committed to updating their progress regularly.Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
+                clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
+                mentee committed to updating their progress regularly.Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
+                clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
+                mentee committed to updating their progress regularly.</p>
+              <button class="delete-meeting mentor-only-btn">🗑️</button>
+          </div>
+      </div>
+
+        <div class="meeting-card">
+          <input type="date" class="meeting-date" value="2025-02-24" readonly>
+          <p>Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
+            clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
+            mentee committed to updating their progress regularly.Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
+            clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
+            mentee committed to updating their progress regularly.Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
+            clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
+            mentee committed to updating their progress regularly.
+          </p>
+          <button class="edit-note mentor-only-btn">
+            <img src="images/pencil_edit.png" alt="Edit">
+          </button>
+          <button class="delete-meeting mentor-only-btn">🗑️</button>
+        </div>
+
+        <div class="meeting-card">
+          <input type="date" class="meeting-date" value="2025-02-25" readonly>
+          <p>Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
+            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
+            document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
+            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
+            document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
+            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
+            document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
+            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
+            document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
+            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
+            document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
+            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
+            document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
+            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
+            document for tracking goals and milestones.</p>
+          <button class="edit-note mentor-only-btn">
+            <img src="images/pencil_edit.png" alt="Edit">
+          </button>
+          <button class="delete-meeting mentor-only-btn">🗑️</button>
+        </div>
+      </div>
+      <h3 class="mentor-only-btn">Add New Meeting</h3>
+      <input type="date" id="meeting-date" class="input-date mentor-only-btn">
+      <textarea id="meeting-summary" rows="7" class="summary-input mentor-only-btn"
+        placeholder="Enter meeting notes"></textarea>
+      <button class="save-btn mentor-only-btn">Save</button>
+    </div>
+  </div>
+  </div>
+  </div>
+>>>>>>> Stashed changes
   <script src="script.js"></script>
 </body>
+
 </html>

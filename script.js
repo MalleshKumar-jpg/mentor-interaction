@@ -1,6 +1,98 @@
+function toggleEditMode(button) {
+    const meetingCard = button.closest('.meeting-card');
+    const noteContent = meetingCard.querySelector('p'); 
+    const meetingDate = meetingCard.querySelector('.meeting-date');
+    const editIcon = button.querySelector('img');      
+
+    if (editIcon.getAttribute('alt') === 'Edit') {
+        noteContent.contentEditable = 'true';    
+        noteContent.focus();            
+        noteContent.style.border = '2px solid #4CAF50'; 
+
+        meetingDate.removeAttribute('readonly');
+        meetingDate.style.border = '2px solid #4CAF50';  
+                           
+        editIcon.setAttribute('src', 'images/save_icon.png');
+        editIcon.setAttribute('alt', 'Save');
+
+    } else {
+        const updatedText = noteContent.textContent.trim();
+        const updatedDate = meetingDate.value;
+
+        if (!updatedText) {
+            alert('Note content cannot be empty.');
+            return; 
+        }
+        if (!updatedDate) {
+            alert('Please select a valid date.');
+            return;
+        }
+
+        noteContent.contentEditable = 'false';        
+        noteContent.style.border = 'none';      
+        
+        meetingDate.setAttribute('readonly', true);
+        meetingDate.style.border = 'none';
+
+        editIcon.setAttribute('src', 'images/pencil_edit.png');
+        editIcon.setAttribute('alt', 'Edit');
+    }
+}
+
+function addNewMeeting() {
+    const meetingDate = document.querySelector('#meeting-date').value;
+    const meetingSummary = document.querySelector('#meeting-summary').value.trim();
+
+    if (meetingDate && meetingSummary) {
+        const newMeetingCard = document.createElement('div');
+        newMeetingCard.classList.add('meeting-card');
+        newMeetingCard.innerHTML = `
+            <input type="date" class="meeting-date" value="${meetingDate}" readonly>
+            <p>${meetingSummary}</p>
+            <button class="edit-note mentor-only-btn">
+                <img src="images/pencil_edit.png" alt="Edit">
+            </button>
+            <button class="delete-meeting mentor-only-btn">🗑️</button> 
+        `;
+
+        document.querySelector('.meeting-history').appendChild(newMeetingCard);
+
+        newMeetingCard.querySelector('.edit-note').addEventListener('click', function () {
+            toggleEditMode(this);
+        });
+
+        newMeetingCard.querySelector('.delete-meeting').addEventListener('click', function () {
+            deleteMeeting(this);
+        });
+
+        document.querySelector('#meeting-date').value = '';
+        document.querySelector('#meeting-summary').value = '';
+    } else {
+        if (!meetingSummary) {
+            alert('Note content cannot be empty.');
+            return; 
+        }
+        if (!meetingDate) {
+            alert('Please select a valid date.');
+            return;
+        }
+    }
+}
+
+function deleteMeeting(button) {
+    const meetingCard = button.closest('.meeting-card'); 
+    if (confirm('Are you sure you want to delete this meeting?')) {
+        meetingCard.remove();  
+    }
+}
+
 window.onload = function() {
     const url_params= new URLSearchParams(window.location.search);
+<<<<<<< Updated upstream
     const role = url_params.get('role'); /* retrieving the type of user (mentor/mentee) from url*/
+=======
+    const role = url_params.get('role'); /* rtrieving the type of user (mentor/mentee) from url*/
+>>>>>>> Stashed changes
     
     if (document.body.id==='login-page'){
         document.getElementById('role').value = role;
@@ -26,6 +118,10 @@ window.onload = function() {
         mentee_cards.forEach(card => {
             card.addEventListener('click',function(){
                 const chosenMentee=card.getAttribute('data-mentee');
+<<<<<<< Updated upstream
+=======
+                console.log(`Chosen Mentee: ${chosenMentee}`);
+>>>>>>> Stashed changes
                 sessionStorage.setItem('chosen_mentee',chosenMentee)
             });
         });
@@ -39,7 +135,26 @@ window.onload = function() {
             document.querySelectorAll('.mentee-only-btn').forEach(btn => btn.style.display='none'); /* hiding the class of mentee-only-btn */
             const sidebar_mentee_name=document.getElementById('mentee-name');
             sidebar_mentee_name.textContent=sessionStorage.getItem('chosen_mentee');
+<<<<<<< Updated upstream
             
+=======
+
+            /* Meeting History functionalising */
+            document.querySelectorAll('.edit-note').forEach(button => {
+                button.addEventListener('click', function() {
+                    toggleEditMode(this);
+                });
+            });
+
+            document.querySelector('#notes .save-btn').addEventListener('click', addNewMeeting);
+            
+            document.querySelectorAll('.delete-meeting').forEach(button => {
+                button.addEventListener('click', function() {
+                    deleteMeeting(this);
+                });
+            });
+            
+>>>>>>> Stashed changes
         }else if(storedRole == 'mentee'){
             document.querySelectorAll('.mentor-only-btn, .mentor-only-container').forEach(elem => elem.style.display='none'); /* hiding the class of mentor-only-btn , mentor-only container */
             
@@ -53,6 +168,7 @@ window.onload = function() {
         
     }
 };
+<<<<<<< Updated upstream
 function toggleEditMode(button) {
     const meetingCard = button.closest('.meeting-card');
     const noteContent = meetingCard.querySelector('.note-content');
@@ -94,3 +210,6 @@ function addNewMeeting() {
 }
 
 document.querySelector('#notes .save-btn').addEventListener('click', addNewMeeting);
+=======
+
+>>>>>>> Stashed changes
