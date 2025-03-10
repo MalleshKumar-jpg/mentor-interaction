@@ -89,7 +89,11 @@ function deleteMeeting(button) {
 window.onload = function() {
     const url_params= new URLSearchParams(window.location.search);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const role = url_params.get('role'); /* retrieving the type of user (mentor/mentee) from url*/
+=======
+    const role = url_params.get('role'); /* rtrieving the type of user (mentor/mentee) from url*/
+>>>>>>> Stashed changes
 =======
     const role = url_params.get('role'); /* rtrieving the type of user (mentor/mentee) from url*/
 >>>>>>> Stashed changes
@@ -119,6 +123,10 @@ window.onload = function() {
             card.addEventListener('click',function(){
                 const chosenMentee=card.getAttribute('data-mentee');
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+                console.log(`Chosen Mentee: ${chosenMentee}`);
+>>>>>>> Stashed changes
 =======
                 console.log(`Chosen Mentee: ${chosenMentee}`);
 >>>>>>> Stashed changes
@@ -136,6 +144,7 @@ window.onload = function() {
             const sidebar_mentee_name=document.getElementById('mentee-name');
             sidebar_mentee_name.textContent=sessionStorage.getItem('chosen_mentee');
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             
 =======
 
@@ -148,12 +157,27 @@ window.onload = function() {
 
             document.querySelector('#notes .save-btn').addEventListener('click', addNewMeeting);
             
+=======
+
+            /* Meeting History functionalising */
+            document.querySelectorAll('.edit-note').forEach(button => {
+                button.addEventListener('click', function() {
+                    toggleEditMode(this);
+                });
+            });
+
+            document.querySelector('#notes .save-btn').addEventListener('click', addNewMeeting);
+            
+>>>>>>> Stashed changes
             document.querySelectorAll('.delete-meeting').forEach(button => {
                 button.addEventListener('click', function() {
                     deleteMeeting(this);
                 });
             });
             
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         }else if(storedRole == 'mentee'){
             document.querySelectorAll('.mentor-only-btn, .mentor-only-container').forEach(elem => elem.style.display='none'); /* hiding the class of mentor-only-btn , mentor-only container */
@@ -168,6 +192,7 @@ window.onload = function() {
         
     }
 };
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 function toggleEditMode(button) {
     const meetingCard = button.closest('.meeting-card');
@@ -210,6 +235,9 @@ function addNewMeeting() {
 }
 
 document.querySelector('#notes .save-btn').addEventListener('click', addNewMeeting);
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
