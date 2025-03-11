@@ -114,11 +114,12 @@ window.onload = function() {
         mentee_cards.forEach(card => {
             card.addEventListener('click',function(){
                 const chosenMentee=card.getAttribute('data-mentee');
-                console.log(`Chosen Mentee: ${chosenMentee}`);
                 sessionStorage.setItem('chosen_mentee',chosenMentee)
             });
         });
     }
+
+    
 
     /* hiding buttons and elements based on the type of user */
     if (document.body.id === 'main-page'){
