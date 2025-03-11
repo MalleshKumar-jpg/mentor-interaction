@@ -158,4 +158,3 @@ window.onload = function() {
     }
 };
 
-hello
