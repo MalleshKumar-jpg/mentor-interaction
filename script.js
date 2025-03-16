@@ -1,4 +1,70 @@
-function toggleEditMode(button) {
+function editOrSaveTasks(button){
+    const taskContainer = button.closest('.task-container');
+    const taskTitle = taskContainer.querySelector('.task-name');
+    const taskDate = taskContainer.querySelector('.task-date');
+
+    if (button.textContent === 'Edit') {
+        taskTitle.removeAttribute('readonly');
+        taskDate.removeAttribute('readonly');
+        taskTitle.style.border = '2px solid #4CAF50';
+        taskDate.style.border = '2px solid #4CAF50';
+        button.textContent = 'Save';
+
+    } else {
+        taskTitle.setAttribute('readonly', true);
+        taskDate.setAttribute('readonly', true);
+        taskTitle.style.border = 'none';
+        taskDate.style.border = 'none';
+        button.textContent = 'Edit';
+    }
+}
+
+function addTask(button){
+    const taskTitle = document.querySelector('#task-name').value;
+    const taskDate = document.querySelector('#task-date').value;
+
+    if (taskTitle && taskDate){
+        
+        const newTask = document.createElement('div');
+        newTask.classList.add('task-container');
+        newTask.innerHTML=`
+        <input type="text" class="input-box task-name" value="${taskTitle}" readonly>
+        <input type="date" class="input-date task-date" value="${taskDate}" readonly>
+        <button class="edit-btn edit-task mentor-only-btn">Edit</button>
+        <button class="delete-task mentor-only-btn">X</button>
+        `
+
+        document.querySelector('.progress-container').appendChild(newTask);
+        
+        newTask.querySelector('.edit-task').addEventListener('click',function(){
+            editOrSaveTasks(this);
+        });
+        
+        newTask.querySelector('.delete-task').addEventListener('click',function(){
+            deleteTask(this);
+        })
+        document.querySelector('#task-name').value = '';
+        document.querySelector('#task-date').value = '';
+    }else{
+        if (!taskTitle) {
+            alert('Task Name cannot be empty.');
+            return; 
+        }
+        else if (!taskDate) {
+            alert('Please select a valid date.');
+            return;
+        }
+    }
+}
+
+function deleteTask(button) {
+    const meetingCard = button.closest('.task-container'); 
+    if (confirm('Are you sure you want to delete this task?')) {
+        meetingCard.remove();  
+    }
+}
+
+function editOrSaveMeeting(button) {
     const meetingCard = button.closest('.meeting-card');
     const noteContent = meetingCard.querySelector('p'); 
     const meetingDate = meetingCard.querySelector('.meeting-date');
@@ -23,7 +89,7 @@ function toggleEditMode(button) {
             alert('Note content cannot be empty.');
             return; 
         }
-        if (!updatedDate) {
+        else if (!updatedDate) {
             alert('Please select a valid date.');
             return;
         }
@@ -39,7 +105,7 @@ function toggleEditMode(button) {
     }
 }
 
-function addNewMeeting() {
+function addMeeting() {
     const meetingDate = document.querySelector('#meeting-date').value;
     const meetingSummary = document.querySelector('#meeting-summary').value.trim();
 
@@ -58,7 +124,7 @@ function addNewMeeting() {
         document.querySelector('.meeting-history').appendChild(newMeetingCard);
 
         newMeetingCard.querySelector('.edit-note').addEventListener('click', function () {
-            toggleEditMode(this);
+            editOrSaveMeeting(this);
         });
 
         newMeetingCard.querySelector('.delete-meeting').addEventListener('click', function () {
@@ -130,14 +196,14 @@ window.onload = function() {
             const sidebar_mentee_name=document.getElementById('mentee-name');
             sidebar_mentee_name.textContent=sessionStorage.getItem('chosen_mentee');
 
-            /* Meeting History functionalising */
+            /* Meeting History edit functionalising */
             document.querySelectorAll('.edit-note').forEach(button => {
                 button.addEventListener('click', function() {
-                    toggleEditMode(this);
+                    editOrSaveMeeting(this);
                 });
             });
 
-            document.querySelector('#notes .save-btn').addEventListener('click', addNewMeeting);
+            document.querySelector('#notes .save-btn').addEventListener('click', addMeeting);
             
             document.querySelectorAll('.delete-meeting').forEach(button => {
                 button.addEventListener('click', function() {
@@ -145,6 +211,22 @@ window.onload = function() {
                 });
             });
             
+            document.querySelectorAll('.add-task').forEach(button =>{
+                button.addEventListener('click',function(){
+                    addTask(this);
+                });
+            });
+
+            document.querySelectorAll('.edit-task').forEach(button =>{
+                button.addEventListener('click',function(){
+                    editOrSaveTasks(this);
+                });
+            });
+            document.querySelectorAll('.delete-task').forEach(button =>{
+                button.addEventListener('click',function(){
+                    deleteTask(this);
+                })
+            });
         }else if(storedRole == 'mentee'){
             document.querySelectorAll('.mentor-only-btn, .mentor-only-container').forEach(elem => elem.style.display='none'); /* hiding the class of mentor-only-btn , mentor-only container */
             
@@ -154,6 +236,7 @@ window.onload = function() {
 
             const header_role=document.getElementById('user-role');
             header_role.textContent='MENTEE';
+
         }
         
     }
