@@ -1,3 +1,67 @@
+function editOrSaveDetails(button){
+    const detailsContainer= button.closest('.details-container');
+    const dataFields = detailsContainer.querySelectorAll('input, textarea')
+    if (button.textContent==='Edit'){
+        dataFields.forEach(input=>{
+            input.removeAttribute('readonly');
+            input.style.border = '2px solid #4CAF50';
+        });
+        button.textContent='Save';
+    }else{
+        dataFields.forEach(input => {
+            input.setAttribute('readonly', true);
+            input.style.border = '';
+        });
+        button.textContent='Edit';
+    }
+}
+
+function addSkill() {
+    const skillInput = document.getElementById('new-skill');
+    const skillList = document.getElementById('skills-list');
+
+    if (skillInput.value.trim() !== "") {
+        const listItem = document.createElement('li');
+        listItem.textContent = skillInput.value;
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = "❌";
+        deleteBtn.style.marginLeft = "10px";
+        deleteBtn.onclick = function () {
+            listItem.remove();
+            updateNumbers(skillList);
+        };
+
+        listItem.appendChild(deleteBtn);
+        skillList.appendChild(listItem);
+
+        skillInput.value = "";
+    }
+}
+
+function addDifficulty() {
+    const difficultyInput = document.getElementById('new-difficulty');
+    const difficultyList = document.getElementById('difficulties-list');
+
+    if (difficultyInput.value.trim() !== "") {
+        const listItem = document.createElement('li');
+        listItem.textContent = difficultyInput.value;
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = "❌";
+        deleteBtn.style.marginLeft = "10px";
+        deleteBtn.onclick = function () {
+            listItem.remove();
+            updateNumbers(difficultyList);
+        };
+
+        listItem.appendChild(deleteBtn);
+        difficultyList.appendChild(listItem);
+
+        difficultyInput.value = "";
+    }
+}
+
 function editOrSaveTasks(button){
     const taskContainer = button.closest('.task-container');
     const taskTitle = taskContainer.querySelector('.task-name');
@@ -13,11 +77,12 @@ function editOrSaveTasks(button){
     } else {
         taskTitle.setAttribute('readonly', true);
         taskDate.setAttribute('readonly', true);
-        taskTitle.style.border = 'none';
-        taskDate.style.border = 'none';
+        taskTitle.style.border = '';
+        taskDate.style.border = '';
         button.textContent = 'Edit';
     }
 }
+
 
 function addTask(button){
     const taskTitle = document.querySelector('#task-name').value;
@@ -237,8 +302,13 @@ window.onload = function() {
             const header_role=document.getElementById('user-role');
             header_role.textContent='MENTEE';
 
+
+            document.querySelectorAll('.edit-details-btn').forEach(button =>{
+                button.addEventListener('click',function(){
+                    editOrSaveDetails(this);
+                })
+            })
         }
-        
     }
 };
 
