@@ -6,12 +6,14 @@
   <style>
     * {
       font-family: Verdana, sans-serif;
+      box-sizing: border-box;
     }
 
     body {
       margin: 0;
       display: flex;
       height: 100vh;
+      overflow-x: hidden;
     }
 
     .sidebar {
@@ -24,6 +26,7 @@
       border-right: 2px solid black;
       padding-top: 54px;
       overflow-y: auto;
+      z-index: 50;
     }
 
     .sidebar a {
@@ -36,8 +39,12 @@
       border-top: 1px solid black;
     }
 
-    .sidebar a:hover {
-      background-color: greenyellow;
+
+    .sidebar a:hover{
+      background-color: goldenrod;
+    }
+    .sidebar a.active {
+      background-color: yellow;
       color: black;
     }
 
@@ -48,18 +55,21 @@
       color: black;
       width: 100%;
       box-sizing: border-box;
+      font-weight: bold;
     }
 
     .main-content {
       margin-left: 200px;
       flex-grow: 1;
       padding: 20px;
+      overflow-y: auto;
+      padding-bottom: 70px;
     }
 
     .header {
-      background: darkblue;
+      background: linear-gradient(to right, #001f3f, #0074D9);
       color: white;
-      padding: 20px;
+      padding: 15px;
       position: fixed;
       width: 100%;
       text-align: center;
@@ -67,7 +77,9 @@
       font-weight: bold;
       top: 0;
       z-index: 100;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
+
 
     .content {
       display: none;
@@ -98,16 +110,18 @@
     .form-label {
       font-weight: bold;
       margin-right: auto;
+      min-width: 180px;
     }
 
     .input-box {
-      background-color: lightgray;
+      background-color: #f5f5f5;
       padding: 10px;
       border-radius: 5px;
       width: 300px;
       font-weight: bold;
       border: 1px solid #ccc;
       margin-right: 10px;
+      transition: border 0.3s, box-shadow 0.3s;
     }
 
     .save-btn {
@@ -121,25 +135,9 @@
       cursor: pointer;
       transition: 0.3s;
     }
-    /*button:not([disabled]){
-      background-color: #ccc;
-      transition: 0.3s;
-    }
-    #button:not([disabled]):hover{
-      outline:none;
-      border:2px solid red;
-      box-shadow:  2px 2px 10px rgba(0, 0, 0, 0.4);;
-    }
-    #button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-      border: none;
-      box-shadow: none;
-      opacity: 0.6;
-    }*/
 
-    .edit-btn{
-      background-color: blue;
+    .edit-btn {
+      background-color: #0074D9;
       color: white;
       border: none;
       padding: 10px 20px;
@@ -149,12 +147,14 @@
       cursor: pointer;
       transition: 0.3s;
     }
+
     .save-btn:hover,
     .edit-btn:hover {
-      outline:none;
-      border:2px solid red;
-      box-shadow:  2px 2px 10px rgba(0, 0, 0, 0.4);;
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
+
 
     .task-container {
       display: flex;
@@ -162,14 +162,25 @@
       gap: 10px;
       width: 100%;
       flex-wrap: wrap;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      transition: all 0.5s;
+    }
+
+    .task-container:hover {
+      background-color: #f0f0f0;
     }
     
     .add-task-container{
-      display:flex;
+      display: flex;
       align-items: center;
-      gap:10px;
-      margin-top: 10px;
-      padding-top: 10px;
+      gap: 10px;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #e8f5e9;
     }
 
     .task-container .input-box {
@@ -183,63 +194,111 @@
       flex-direction: column-reverse;
       gap: 20px;
       justify-content: center;
-      
+      margin-bottom: 60px;
     }
 
     .meeting-card {
-      background-color: lightgray;
+      background-color: #f5f5f5;
       padding: 20px;
       border-radius: 10px;
       text-align: left;
-      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-      transition: 0.5s;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
       position: relative;
-      z-index: 2;
-      max-height: 200px;     
-      overflow-y: auto;         
+      max-height: 300px;     
+      overflow-y: auto;
+      margin-bottom: 20px;
     }
 
     .meeting-card:hover {
-      transform: scale(1.05);
-      background-color: aliceblue;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      background-color: #e8f4fc;
     }
 
-    .meeting-card-input {
-      background-color: lightgray;
-      padding: 20px;
-      border-radius: 10px;
-      width: 250px;
-      text-align: left;
-      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    .meeting-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    .meeting-content {
+      position: relative;
+      padding-right: 30px;
+    }
+
+    .meeting-content p {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .delete-meeting {
+      position: absolute;
+      bottom: -10px;
+      right: -10px;
+      border: 1px solid orangered;
+      cursor: pointer;
+      font-size: 20px;
+      opacity: 0.7;
+      transition: all 0.3s;
+      border-radius: 50%;
+    }
+
+    .delete-meeting:hover {
+      opacity: 1;
+      background-color: orange;
     }
 
     .input-date,
     .meeting-date {
-      font-size: 18px;
-      background-color: lightgray;
-      padding: 2px;
+      font-size: 16px;
+      background-color: #f5f5f5;
+      padding: 8px;
       border-radius: 5px;
       max-width: 150px;
       font-weight: bold;
+      border: 1px solid #ccc;
     }
 
     .summary-input {
       width: 100%;
-      background-color: lightgray;
+      background-color: #f5f5f5;
       outline: 0;
       resize: none;
       box-sizing: border-box;
-      padding: 10px;
+      padding: 12px;
       border-radius: 5px;
-      border: 2px solid black;
+      border: 1px solid #ccc;
+      font-family: Verdana, sans-serif;
+      min-height: 120px;
+      margin-bottom: 15px;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+
+    .summary-input:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
     }
 
     h2 {
       font-size: 32px;
       font-weight: bold;
       margin-top: 80px;
-      color: black;
+      color: #001f3f;
       z-index: 10;
+      border-bottom: 2px solid #0074D9;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+    }
+
+    h3 {
+      font-size: 24px;
+      color: #333;
+      margin-top: 40px;
+      margin-bottom: 15px;
     }
 
     .delete-task {
@@ -247,14 +306,19 @@
       color: white;
       border: none;
       border-radius: 50%;
-      width: 25px;
-      height: 25px;
+      width: 30px;
+      height: 30px;
       font-weight: bold;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      transition: background-color 0.3s;
+    }
+
+    .delete-task:hover {
+      background-color: #ff0000;
     }
 
     .edit-note {
@@ -265,6 +329,7 @@
       border: none;
       cursor: pointer;
       font-size: 16px;
+      z-index: 5;
     }
 
     .edit-note img {
@@ -274,7 +339,69 @@
       cursor: pointer;
     }
 
+    .add-task {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .add-task:hover {
+      background-color: #45a049;
+      transform: scale(1.1);
+    }
+
+    .input-box[readonly],
+    .input-date[readonly] {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      font-weight: normal;
+      color: #555;
+    }
+
+    .meeting-date[readonly] {
+      background-color: transparent;
+      border: none;
+      cursor: default;
+      color: #0074D9;
+      font-weight: bold;
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      color: #666;
+      background-color: #f8f8f8;
+      border-top: 1px solid #eaeaea;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+    }
+
     @media (max-width: 768px) {
+      .sidebar {
+        width: 50%;
+        height: auto;
+        position: relative;
+        padding-top: 60px;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding-top: 60px;
+      }
 
       .form-group,
       .task-container {
@@ -292,62 +419,21 @@
         width: 100%;
         max-width: 100%;
       }
+
+      .header {
+        font-size: 20px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      .meeting-card {
+        max-height: none;
+      }
     }
 
-    .add-task {
-      background-color: green;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 25px;
-      height: 25px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .input-box[readonly],
-    .input-date[readonly] {
-      background-color: whitesmoke;
-      border: 1px solid grey;
-      font-weight: bold;
-    }
-
-    .meeting-date[readonly] {
-      background-color: transparent;
-      border: none;
-      cursor: default;
-    }
-    
-    .footer {
-        text-align: center;
-        padding: 15px;
-        font-size: 14px;
-        color: #666;
-        background-color: #f8f8f8;
-        border-top: 1px solid #eaeaea;
-        width: 100%;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        z-index: 10;
-      }
-      
-      body {
-          padding-bottom: 50px;
-      }
-      
-      
-      .main-content {
-          padding-bottom: 70px;
-      }
-      
-      .meeting-history {
-          margin-bottom: 60px;
-      }
+  
   </style>
 </head>
 
@@ -358,9 +444,9 @@
 
   <div class="sidebar">
     <p id="mentee-name">MENTEE 1</p>
-    <a href="#details">DETAILS</a>
-    <a href="#progress">PROGRESS TRACKING</a>
-    <a href="#notes">MEETING NOTES</a>
+    <a href="#details" class="nav-link">DETAILS</a>
+    <a href="#progress" class="nav-link">PROGRESS TRACKING</a>
+    <a href="#notes" class="nav-link">MEETING NOTES</a>
   </div>
 
   <div class="main-content">
@@ -368,39 +454,39 @@
       <h2>DETAILS</h2>
       <div class="form-group">
         <label class="form-label" for="name">Full Name:</label>
-        <input type="text" id="name" class="input-box" readonly>
+        <input type="text" id="name" class="input-box" value="Rajesh" readonly>
       </div>
       <div class="form-group">
         <label class="form-label" for="email">Email Address:</label>
-        <input type="email" id="email" class="input-box" readonly>
+        <input type="email" id="email" class="input-box" value="rajesh@yahoo.com" readonly>
       </div>
       <div class="form-group">
         <label class="form-label" for="phone">Phone Number:</label>
-        <input type="tel" id="phone" class="input-box" readonly>
+        <input type="tel" id="phone" class="input-box" value="1234567890" readonly>
       </div>
       <div class="form-group">
         <label class="form-label" for="year">Year of Study:</label>
-        <input type="text" id="year" class="input-box" readonly>
+        <input type="text" id="year" class="input-box" value="First Year" readonly>
       </div>
       <div class="form-group">
         <label class="form-label" for="department">Department:</label>
-        <input type="text" id="department" class="input-box" readonly>
+        <input type="text" id="department" class="input-box" value="Computer Science" readonly>
       </div>
       <div class="form-group">
         <label class="form-label" for="digitalid">Digital ID:</label>
-        <input type="text" id="digitalid" class="input-box" readonly>
+        <input type="text" id="digitalid" class="input-box" value="2420491" readonly>
       </div>
       <div class="form-group">
         <label class="form-label" for="regno">Registration Number:</label>
-        <input type="text" id="regno" class="input-box" readonly>
+        <input type="text" id="regno" class="input-box" value="3122245002123" readonly>
       </div>
       <div class="form-group">
         <label class="form-label" for="parentphone">Parents Phone Number:</label>
-        <input type="text" id="parentphone" class="input-box" readonly>
+        <input type="text" id="parentphone" class="input-box" value="9876543210" readonly>
       </div>
       <div class="form-group">
         <label class="form-label" for="parentid">Parents Email ID:</label>
-        <input type="text" id="parentid" class="input-box" readonly>
+        <input type="text" id="parentid" class="input-box" value="parent@yahoo.com" readonly>
       </div>
       <button class="edit-btn edit-details-btn mentee-only-btn">Edit</button>
     </div>
@@ -411,38 +497,35 @@
         <input type="date" class="input-date" id="task-date">
         <button class="add-task mentor-only-btn">+</button>
       </div>
-      <button class="save-btn save-task mentor-only-btn" id="save-task">Save Tasks</button>
+      <h3 style = "margin-bottom:30px">Development Practices:</h3>
 
       <div class="task-container">
-        <input type="text" class="input-box task-name" value="Task 1" readonly>
-        <input type="date" class="input-date task-date" readonly>
+        <input type="text" class="input-box task-name" value="Read a book" readonly>
+        <input type="date" class="input-date task-date" value="2025-04-15" readonly>
         <button class="edit-btn edit-task mentor-only-btn">Edit</button>
         <button class="delete-task mentor-only-btn">X</button>
       </div>
 
       <div class="task-container">
-        <input type="text" class="input-box task-name" value="Task 2" readonly>
-        <input type="date" class="input-date task-date" readonly>
+        <input type="text" class="input-box task-name" value="participate in speaking competitions" readonly>
+        <input type="date" class="input-date task-date" value="2025-05-10" readonly>
         <button class="edit-btn edit-task mentor-only-btn">Edit</button>
         <button class="delete-task mentor-only-btn">X</button>
       </div>
-
 
       <div class="task-container">
-        <input type="text" class="input-box task-name" value="Task 3" readonly>
-        <input type="date" class="input-date task-date" readonly>
+        <input type="text" class="input-box task-name" value="ask doubts in class" readonly>
+        <input type="date" class="input-date task-date" value="2025-05-25" readonly>
         <button class="edit-btn edit-task mentor-only-btn">Edit</button>
         <button class="delete-task mentor-only-btn">X</button>
       </div>
-
-      
     </div>
 
     <div id="notes" class="notes-container content">
       <h2>MEETING HISTORY</h2>
       
       <h3 class="mentor-only-btn">Add New Meeting</h3>
-      <input type="date" id="meeting-date" class="input-date mentor-only-btn">
+      <input type="date" id="meeting-date" class="input-date mentor-only-btn" value="2025-03-24">
       <textarea id="meeting-summary" rows="7" class="summary-input mentor-only-btn"
         placeholder="Enter meeting notes"></textarea>
       <button class="save-btn mentor-only-btn">Save</button>
@@ -450,7 +533,7 @@
       <div class="meeting-history">
         <div class="meeting-card">
           <div class="meeting-header">
-              <input type="date" class="meeting-date" value="2025-02-24" readonly>
+              <input type="date" class="meeting-date" value="2025-03-15" readonly>
               <button class="edit-note mentor-only-btn">
                   <img src="images/pencil_edit.png" alt="Edit">
               </button>
@@ -458,62 +541,53 @@
           <div class="meeting-content">
               <p>Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
                 clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
-                mentee committed to updating their progress regularly.Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
-                clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
-                mentee committed to updating their progress regularly.Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
-                clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
                 mentee committed to updating their progress regularly.</p>
               <button class="delete-meeting mentor-only-btn">🗑️</button>
           </div>
-      </div>
-
-        <div class="meeting-card">
-          <input type="date" class="meeting-date" value="2025-02-24" readonly>
-          <p>Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
-            clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
-            mentee committed to updating their progress regularly.Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
-            clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
-            mentee committed to updating their progress regularly.Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
-            clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
-            mentee committed to updating their progress regularly.
-          </p>
-          <button class="edit-note mentor-only-btn">
-            <img src="images/pencil_edit.png" alt="Edit">
-          </button>
-          <button class="delete-meeting mentor-only-btn">🗑️</button>
         </div>
 
         <div class="meeting-card">
-          <input type="date" class="meeting-date" value="2025-02-25" readonly>
-          <p>Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
-            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
-            document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
-            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
-            document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
-            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
-            document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
-            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
-            document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
-            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
-            document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
-            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
-            document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
-            weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
-            document for tracking goals and milestones.</p>
-          <button class="edit-note mentor-only-btn">
-            <img src="images/pencil_edit.png" alt="Edit">
-          </button>
-          <button class="delete-meeting mentor-only-btn">🗑️</button>
+          <div class="meeting-header">
+              <input type="date" class="meeting-date" value="2025-03-01" readonly>
+              <button class="edit-note mentor-only-btn">
+                  <img src="images/pencil_edit.png" alt="Edit">
+              </button>
+          </div>
+          <div class="meeting-content">
+              <p>Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
+                weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
+                document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
+                weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
+                document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
+                weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
+                document for tracking goals and milestones.</p>
+              <button class="delete-meeting mentor-only-btn">🗑️</button>
+          </div>
+        </div>
+
+        <div class="meeting-card">
+          <div class="meeting-header">
+              <input type="date" class="meeting-date" value="2025-02-15" readonly>
+              <button class="edit-note mentor-only-btn">
+                  <img src="images/pencil_edit.png" alt="Edit">
+              </button>
+          </div>
+          <div class="meeting-content">
+              <p>Discussed long-term goals and career aspirations. The mentor provided guidance on industry trends and 
+                recommended resources for skill development. The mentee shared concerns about balancing academic 
+                responsibilities with extracurricular activities.</p>
+              <button class="delete-meeting mentor-only-btn">🗑️</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
-  </div>
-  <script src="script.js"></script>
+
   <div class="footer">
     &copy; 2025 Mentoree. All rights reserved.
-</div>
+  </div>
+  
+  <script src="script.js"></script>
 </body>
 
 </html>
