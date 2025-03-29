@@ -10,6 +10,10 @@ function editOrSaveDetails(button) {
         });
         button.textContent = 'Save';
     } else {
+        dataFields.forEach(input => {
+            input.style.border = '';  // Clear any previous border style
+            input.style.backgroundColor = '';  // Clear background color
+        });
         let isEmpty = false;
         dataFields.forEach(input => {
             if (!input.value.trim()) {
@@ -22,7 +26,62 @@ function editOrSaveDetails(button) {
             alert('Please fill in all fields before saving.');
             return;
         }
-
+       // Validation rules
+       const details = {};
+       dataFields.forEach(input => {
+           if (input.name) {
+               details[input.name] = input.value.trim();
+           }
+       });
+       // Phone number validation
+       const phoneRegex = /^[0-9]{10}$/;
+       if (details.phone && !phoneRegex.test(details.phone)) {
+           document.getElementById('phone').style.border = '2px solid #ff0000';
+           alert("Invalid phone number");
+           return;
+       }
+       // Digital ID validation
+       const digitalidRegex = /^[0-9]{7}$/;
+       if (details.digitalid && !digitalidRegex.test(details.digitalid)) {
+           document.getElementById('digitalid').style.border = '2px solid #ff0000';
+           alert("Invalid Digital ID");
+           return;
+       }
+       // Registration number validation 
+       const regnoRegex = /^[0-9]{13}$/;
+       if (details.regno && !regnoRegex.test(details.regno)) {
+           document.getElementById('regno').style.border = '2px solid #ff0000';
+           alert("Invalid Registration Number");
+           return;
+       }
+       // Name validation
+       const nameRegex = /^[a-zA-Z][a-zA-Z\s\.]*$/;
+       if (details.name && !nameRegex.test(details.name)) {
+           document.getElementById('name').style.border = '2px solid #ff0000';
+           alert("Invalid name");
+           return;
+       }
+       // Email validation (must end with @domain.com)
+       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.com$/;
+       if (details.email && !emailRegex.test(details.email)) {
+           document.getElementById('email').style.border = '2px solid #ff0000';
+           alert("Invalid email");
+           return;
+       }
+       // Parent phone validation
+       const parentphoneRegex = /^[0-9]{10}$/;
+       if (details.parentphone && !parentphoneRegex.test(details.parentphone)) {
+           document.getElementById('parentphone').style.border = '2px solid #ff0000';
+           alert("Invalid parent phone number");
+           return;
+       }
+       // Parent email validation
+       const parentidRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.com$/;
+       if (details.parentid && !parentidRegex.test(details.parentid)) {
+           document.getElementById('parentid').style.border = '2px solid #ff0000';
+           alert("Invalid parent email");
+           return;
+       }
         dataFields.forEach(input => {
             input.setAttribute('readonly', true);
             input.style.border = '';
