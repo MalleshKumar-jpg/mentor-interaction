@@ -43,10 +43,7 @@ function editOrSaveDetails(button) {
         
         confirmationMsg.classList.add('confirmation-msg');
         detailsContainer.appendChild(confirmationMsg);
-        
-        setTimeout(() => {
-            confirmationMsg.remove();
-        }, 3000);
+        confirmationMsg.remove();
         
     }
 }
@@ -186,11 +183,7 @@ function editOrSaveMeeting(button) {
         editIcon.setAttribute('src', 'images/pencil_edit.png');
         editIcon.setAttribute('alt', 'Edit');
         
-        // Add animation for saved changes
-        meetingCard.style.backgroundColor = '#e8f5e9';
-        setTimeout(() => {
-            meetingCard.style.backgroundColor = '';
-        }, 500);
+        meetingCard.style.backgroundColor = '';
     }
 }
 
