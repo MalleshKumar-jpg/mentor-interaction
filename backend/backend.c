@@ -60,6 +60,7 @@ void add_user(char* username, char* password, char* name, char* email, int role)
 struct User* authenticate_user(char* username, char* password, int role);
 int username_exists(char* username);
 int is_valid_email(char* email);
+int is_date_valid(char* date);
 void display_header(char* title);
 void main_menu();
 int login_with_role(int role);
@@ -81,14 +82,14 @@ void delete_meeting(struct User* mentee);
 
 int hash_function(char* str) {
     int hash = 0;
-    for (i = 0; str[i] != '\0'; i++) {
+    for (i =0; str[i] != '\0'; i++) {
         hash = hash * 31 + str[i];
     }
     return hash % HASH_SIZE;
 }
 
 void sample_data() {
-    for (i = 0; i < HASH_SIZE; i++) {
+    for (i =0; i < HASH_SIZE; i++) {
         hash_table[i] = NULL;
     }
     
@@ -112,6 +113,23 @@ void sample_data() {
     rajesh->tasks = NULL;
     rajesh->meetings = NULL;
     
+    struct Meeting_note* meeting1 = (struct Meeting_note*)malloc(sizeof(struct Meeting_note));
+    strcpy(meeting1->date, "15-03-2025");
+    strcpy(meeting1->summary, "Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The mentee committed to updating their progress regularly.");
+    meeting1->next = NULL;
+    rajesh->meetings = meeting1;
+    
+    struct Meeting_note* meeting2 = (struct Meeting_note*)malloc(sizeof(struct Meeting_note));
+    strcpy(meeting2->date, "01-03-2025");
+    strcpy(meeting2->summary, "Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared document for tracking goals and milestones.");
+    meeting2->next = NULL;
+    meeting1->next = meeting2;
+    
+    struct Meeting_note* meeting3 = (struct Meeting_note*)malloc(sizeof(struct Meeting_note));
+    strcpy(meeting3->date, "15-02-2025");
+    strcpy(meeting3->summary, "Discussed long-term goals and career aspirations. The mentor provided guidance on industry trends and recommended resources for skill development. The mentee shared concerns about balancing academic responsibilities with extracurricular activities.");
+    meeting3->next = NULL;
+    meeting2->next = meeting3;
 }
 
 void add_user(char* username, char* password, char* name, char* email, int role) {
@@ -207,6 +225,24 @@ int is_valid_email(char* email) {
     //
     if (dot[1] == '\0') {
         return 0;
+    }
+    
+    return 1;
+}
+
+
+// returns 1 if valid
+int is_date_valid(char* date) {
+    if (strlen(date) != 10 || date[2] != '-' || date[5] != '-')
+        return 0;
+    
+    for (i =0; i < 10; i++) {
+        if (i == 2 || i == 5){
+            continue;
+        } 
+        if (!isdigit(date[i])){
+            return 0;
+        }
     }
     
     return 1;
@@ -382,7 +418,7 @@ void mentor_menu() {
         printf("YOUR MENTEES:\n");
         printf("------------------------------------------\n");
         
-        for (i = 0; i < mentor->mentee_count; i++) {
+        for (i =0; i < mentor->mentee_count; i++) {
             printf("[%d] %s\n", i + 1, mentor->mentees[i]->name);
         }
 
@@ -501,23 +537,225 @@ void add_task(struct User* mentee) {
  }
  
  void manage_meetings(struct User* mentee) {
-    //add code
+    int choice;
+    
+    while (1) {
+        display_header("MEETING NOTES");
+        
+        view_meetings(mentee);
+        
+        printf("\nOptions:\n");
+        if (current_user->role == ROLE_MENTOR) {
+            printf("[1] Add New Meeting Note\n");
+            printf("[2] Edit Meeting Note\n");
+            printf("[3] Delete Meeting Note\n");
+        }
+        printf("[0] Back\n\n");
+        
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        
+        if (choice == 0) {
+            return;
+        } else if (current_user->role == ROLE_MENTOR && choice >= 1 && choice <= 3) {
+            switch (choice) {
+                case 1:
+                    add_meeting(mentee);
+                    break;
+                case 2:
+                    edit_meeting(mentee);
+                    break;
+                case 3:
+                    delete_meeting(mentee);
+                    break;
+            }
+        } else {
+            printf("\nInvalid choice. Please try again.\n");
+        }
+    }
  }
  
  void view_meetings(struct User* mentee) {
-    //add code
+    struct Meeting_note* current = mentee->meetings;
+    
+    printf("Meeting Notes for %s:\n", mentee->name);
+    printf("------------------------------------------\n");
+    
+    if (current == NULL) {
+        printf("No meeting notes recorded yet.\n");
+        return;
+    }
+    
+    int count = 1;
+    while (current != NULL) {
+        printf("Meeting %d - Date: %s\n", count++, current->date);
+        printf("%s\n\n", current->summary);
+        current = current->next;
+    }
  }
  
  void add_meeting(struct User* mentee) {
-    //add code
+    display_header("ADD MEETING NOTE");
+    
+    struct Meeting_note* new_meeting = (struct Meeting_note*)malloc(sizeof(struct Meeting_note));
+    if (new_meeting == NULL) {
+        printf("\nMemory allocation failed.\n");
+        return;
+    }
+    
+    char input[SUMMARY_LEN];
+    
+    do {
+        printf("Enter meeting date (DD-MM-YYYY): ");
+        scanf(" %[^\n]", input);
+        
+        if (!is_date_valid(input)) {
+            printf("Invalid date format. Please use DD-MM-YYYY format.\n");
+        }
+    } while (!is_date_valid(input));
+    
+    strcpy(new_meeting->date, input);
+    
+    do {
+        printf("Enter meeting summary: ");
+        scanf(" %[^\n]", input);
+        
+        if (strlen(input) == 0) {
+            printf("Meeting summary cannot be empty. Please enter a summary.\n");
+        }
+    } while (strlen(input) == 0);
+    
+    strcpy(new_meeting->summary, input);
+    new_meeting->next = NULL;
+    
+    if (mentee->meetings == NULL) {
+        mentee->meetings = new_meeting;
+    } else {
+        struct Meeting_note* current = mentee->meetings;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = new_meeting;
+    }
+    
+    printf("\nMeeting note added successfully!\n");
  }
  
  void edit_meeting(struct User* mentee) {
-    //add code
+    struct Meeting_note* current;
+    int meeting_no, count = 1;
+    char input[SUMMARY_LEN];
+    
+    view_meetings(mentee);
+    
+    if (mentee->meetings == NULL) {
+        printf("\nNo meeting notes to edit.\n");
+        return;
+    }
+    
+    printf("\nEnter meeting number to edit (0 to cancel): ");
+    scanf("%d", &meeting_no);
+    
+    if (meeting_no <= 0) {
+        printf("Meeting addition cancelled.\n");
+        return;
+    }
+    
+    current = mentee->meetings;
+    while (current != NULL && count < meeting_no) {
+        current = current->next;
+        count++;
+    }
+    
+    if (current == NULL) {
+        printf("\nInvalid meeting number.\n");
+        return;
+    }
+    
+    display_header("EDIT MEETING NOTE");
+    
+    printf("Current date: %s\n", current->date);
+    printf("New date (DD-MM-YYYY, or press Enter to keep current): ");
+
+    getchar();
+
+    fgets(input, DATE_LEN, stdin);
+    input[strcspn(input, "\n")] = 0;
+
+    if (strlen(input) > 0) {
+        if (is_date_valid(input)) {
+            strcpy(current->date, input);
+        } else {
+            printf("Invalid date format. Date remains unchanged.\n");
+        }
+    }
+    
+    printf("\nCurrent summary: %s\n", current->summary);
+    printf("New summary (or press Enter to keep current): ");
+
+    fgets(input, SUMMARY_LEN, stdin);
+    input[strcspn(input, "\n")] = 0;
+
+    if (strlen(input) > 0) {
+        strcpy(current->summary, input);
+    }
+    
+    printf("\nMeeting note updated successfully!\n");
  }
  
  void delete_meeting(struct User* mentee) {
-    //add code
+    int meeting_no, count = 1;
+    char confirm;
+    
+    // Display meetings first
+    view_meetings(mentee);
+    
+    if (mentee->meetings == NULL) {
+        printf("\nNo meeting notes to delete.\n");
+        return;
+    }
+    
+    printf("\nEnter meeting number to delete (0 to cancel): ");
+    scanf("%d", &meeting_no);
+    
+    if (meeting_no <= 0) {
+        printf("Meeting deletion cancelled.\n");
+        return;
+    }
+    getchar();
+    printf("Are you sure you want to delete this meeting note? (y/n): ");
+    scanf("%c", &confirm);
+    
+    if (tolower(confirm) != 'y') {
+        printf("\nMeeting deletion cancelled.\n");
+        return;
+    }
+    
+    if (meeting_no == 1) {
+        struct Meeting_note* temp = mentee->meetings;
+        mentee->meetings = mentee->meetings->next;
+        free(temp);
+        printf("\nMeeting note deleted successfully!\n");
+        return;
+    }
+    
+    struct Meeting_note* prev = mentee->meetings;
+    count = 1;
+    while (prev->next != NULL && count < meeting_no - 1) {
+        prev = prev->next;
+        count++;
+    }
+    
+    if (prev->next == NULL) {
+        printf("\nInvalid meeting number.\n");
+        return;
+    }
+    
+    struct Meeting_note* temp = prev->next;
+    prev->next = temp->next;
+    free(temp);
+    
+    printf("\nMeeting note deleted successfully!\n");
  }
  
  int main() {
