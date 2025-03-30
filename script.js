@@ -62,7 +62,7 @@ function editOrSaveDetails(button) {
            return;
        }
        // Email validation
-       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.com$/;
+       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
        if (!emailRegex.test(details.email)) {
            document.getElementById('email').style.border = '2px solid #ff0000';
            alert("Invalid email");
@@ -76,7 +76,7 @@ function editOrSaveDetails(button) {
            return;
        }
        // Parent email validation
-       const parentidRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.com$/;
+       const parentidRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
        if (!parentidRegex.test(details.parentid)) {
            document.getElementById('parentid').style.border = '2px solid #ff0000';
            alert("Invalid parent email");
@@ -89,21 +89,6 @@ function editOrSaveDetails(button) {
         });
         button.textContent = 'Edit';
 
-        const confirmationMsg = document.createElement('div');
-        confirmationMsg.textContent = 'Details saved successfully!';
-        confirmationMsg.style.color = '#4CAF50';
-        confirmationMsg.style.fontWeight = 'bold';
-        confirmationMsg.style.marginTop = '10px';
-        
-        const existingMsg = detailsContainer.querySelector('.confirmation-msg');
-        if (existingMsg) {
-            existingMsg.remove();
-        }
-        
-        confirmationMsg.classList.add('confirmation-msg');
-        detailsContainer.appendChild(confirmationMsg);
-        confirmationMsg.remove();
-        
     }
 }
 
@@ -245,7 +230,7 @@ function editOrSaveMeeting(button) {
         }
         //Meeting Date Validation
         const today = new Date();
-        const selectedDate = new Date(meetingDate);
+        const selectedDate = new Date(meetingDate.value);
         if (selectedDate > today) {
             alert('Please select a date on or before today for the meeting.');
             document.querySelector('#meeting-date').focus();
@@ -328,6 +313,14 @@ function deleteMeeting(button) {
         meetingCard.remove();
     }
 }
+
+function handleLogout() {
+    // Clear any session data
+    sessionStorage.clear();
+    // Redirect to home page
+    window.location.href = 'index.html';
+}
+
 window.onload = function() {
     const url_params = new URLSearchParams(window.location.search);
     const role = url_params.get('role'); /* retrieving the type of user (mentor/mentee) from url*/
@@ -347,9 +340,9 @@ window.onload = function() {
             if (role) {
                 sessionStorage.setItem('role', role);
                 if (role === 'mentor') {
-                    window.location.href = 'mentor_menteeslist.html';
+                    window.location.href = 'mentor_menteeslist.html?role=mentor';
                 } else if (role === 'mentee') {
-                    window.location.href = 'main.html';
+                    window.location.href = 'main.html?role=mentee';
                 }
             } else {
                 alert('No role detected. Please select your role');
@@ -375,7 +368,7 @@ window.onload = function() {
             }
             // Basic validation for email
             const email = document.getElementById('email').value;
-            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.com$/;
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
             if (!emailRegex.test(email)) {
                 alert('Please enter a valid email address');
                 return;
@@ -415,8 +408,20 @@ window.onload = function() {
     if (document.body.id === 'main-page') {
         const storedRole = sessionStorage.getItem('role');
 
+        // Add event listener for logout in the sidebar
+        const logoutNav = document.querySelector('.logout-nav');
+        if (logoutNav) {
+            logoutNav.addEventListener('click', handleLogout);
+        }
+
         if (storedRole == 'mentor') {
             document.querySelectorAll('.mentee-only-btn').forEach(btn => btn.style.display = 'none'); /* hiding the class of mentee-only-btn */
+            
+            // Change the logout button color for mentors to match their theme
+            const logoutButton = document.querySelector('.logout-button');
+            if (logoutButton) {
+                logoutButton.style.backgroundColor = '#0074D9';
+            }
             const sidebar_mentee_name = document.getElementById('mentee-name');
             sidebar_mentee_name.textContent = sessionStorage.getItem('chosen_mentee') || 'MENTEE 1';
 
@@ -459,13 +464,6 @@ window.onload = function() {
             sidebar_mentee_name.style.backgroundColor = '#4CAF50'; 
             sidebar_mentee_name.textContent = 'MY DASHBOARD';
 
-            const header_role = document.getElementById('user-role');
-            header_role.textContent = 'MENTEE';
-            
-            const headerLink = document.querySelector('a[href="mentor_menteeslist.html?role=mentor"]');
-            if (headerLink) {
-                headerLink.setAttribute('href', 'index.html');
-            }
 
             document.querySelectorAll('.edit-details-btn').forEach(button => {
                 button.addEventListener('click', function() {
