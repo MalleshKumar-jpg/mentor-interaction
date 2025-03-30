@@ -35,49 +35,49 @@ function editOrSaveDetails(button) {
        });
        // Phone number validation
        const phoneRegex = /^[0-9]{10}$/;
-       if (details.phone && !phoneRegex.test(details.phone)) {
+       if (!phoneRegex.test(details.phone)) {
            document.getElementById('phone').style.border = '2px solid #ff0000';
            alert("Invalid phone number");
            return;
        }
        // Digital ID validation
        const digitalidRegex = /^[0-9]{7}$/;
-       if (details.digitalid && !digitalidRegex.test(details.digitalid)) {
+       if (!digitalidRegex.test(details.digitalid)) {
            document.getElementById('digitalid').style.border = '2px solid #ff0000';
            alert("Invalid Digital ID");
            return;
        }
        // Registration number validation 
        const regnoRegex = /^[0-9]{13}$/;
-       if (details.regno && !regnoRegex.test(details.regno)) {
+       if (!regnoRegex.test(details.regno)) {
            document.getElementById('regno').style.border = '2px solid #ff0000';
            alert("Invalid Registration Number");
            return;
        }
        // Name validation
        const nameRegex = /^[a-zA-Z][a-zA-Z\s\.]*$/;
-       if (details.name && !nameRegex.test(details.name)) {
+       if (!nameRegex.test(details.name)) {
            document.getElementById('name').style.border = '2px solid #ff0000';
            alert("Invalid name");
            return;
        }
        // Email validation (must end with @domain.com)
        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.com$/;
-       if (details.email && !emailRegex.test(details.email)) {
+       if (!emailRegex.test(details.email)) {
            document.getElementById('email').style.border = '2px solid #ff0000';
            alert("Invalid email");
            return;
        }
        // Parent phone validation
        const parentphoneRegex = /^[0-9]{10}$/;
-       if (details.parentphone && !parentphoneRegex.test(details.parentphone)) {
+       if (!parentphoneRegex.test(details.parentphone)) {
            document.getElementById('parentphone').style.border = '2px solid #ff0000';
            alert("Invalid parent phone number");
            return;
        }
        // Parent email validation
        const parentidRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.com$/;
-       if (details.parentid && !parentidRegex.test(details.parentid)) {
+       if (!parentidRegex.test(details.parentid)) {
            document.getElementById('parentid').style.border = '2px solid #ff0000';
            alert("Invalid parent email");
            return;
