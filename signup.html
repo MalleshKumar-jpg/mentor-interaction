@@ -86,9 +86,27 @@
             margin-top: 15px;
             font-size: 14px;
         }
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .home-button:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body id="signup-page">
+    <a href="index.html" class="home-button">Home</a>
     <div class="signup-container">
     <h2 style="text-decoration:underline">SIGN UP</h2>
         <form id="signup-form">
@@ -116,6 +134,7 @@
 
             <button type="submit" class="signup-button">Sign Up</button>
         </form>
+        
         <div class="login-link">
             Already have an account? <a href="login.html?role=mentee">Log in</a>
         </div>
@@ -125,4 +144,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+</html>
 </html>

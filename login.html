@@ -82,10 +82,32 @@
             margin-bottom: 60px;
         }
         
-    
+        .signup-link {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .home-button:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body id="login-page">
+    <a href="index.html" class="home-button">Home</a>
     <div class="login-container">
     <h2 style="text-decoration:underline">LOGIN</h2>
         <form id="login-form">
@@ -103,6 +125,9 @@
         </form>
         <div class="signup-link" id="signup-option">
             <!-- This will be populated by JavaScript based on the role -->
+        </div>
+        
+        <div class="signup-link" id="signup-option">
         </div>
     </div>
     <div class="footer">

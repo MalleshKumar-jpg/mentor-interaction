@@ -61,8 +61,8 @@ function editOrSaveDetails(button) {
            alert("Invalid name");
            return;
        }
-       // Email validation (must end with @domain.com)
-       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.com$/;
+       // Email validation
+       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
        if (!emailRegex.test(details.email)) {
            document.getElementById('email').style.border = '2px solid #ff0000';
            alert("Invalid email");
@@ -76,7 +76,7 @@ function editOrSaveDetails(button) {
            return;
        }
        // Parent email validation
-       const parentidRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.com$/;
+       const parentidRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
        if (!parentidRegex.test(details.parentid)) {
            document.getElementById('parentid').style.border = '2px solid #ff0000';
            alert("Invalid parent email");
@@ -88,22 +88,6 @@ function editOrSaveDetails(button) {
             input.style.backgroundColor = '#f9f9f9';
         });
         button.textContent = 'Edit';
-
-        const confirmationMsg = document.createElement('div');
-        confirmationMsg.textContent = 'Details saved successfully!';
-        confirmationMsg.style.color = '#4CAF50';
-        confirmationMsg.style.fontWeight = 'bold';
-        confirmationMsg.style.marginTop = '10px';
-        
-        const existingMsg = detailsContainer.querySelector('.confirmation-msg');
-        if (existingMsg) {
-            existingMsg.remove();
-        }
-        
-        confirmationMsg.classList.add('confirmation-msg');
-        detailsContainer.appendChild(confirmationMsg);
-        confirmationMsg.remove();
-        
     }
 }
 
@@ -245,7 +229,7 @@ function editOrSaveMeeting(button) {
         }
         //Meeting Date Validation
         const today = new Date();
-        const selectedDate = new Date(meetingDate);
+        const selectedDate = new Date(meetingDate.value);
         if (selectedDate > today) {
             alert('Please select a date on or before today for the meeting.');
             document.querySelector('#meeting-date').focus();
@@ -318,8 +302,6 @@ function addMeeting() {
 
     document.querySelector('#meeting-date').value = '';
     document.querySelector('#meeting-summary').value = '';
-    
-    
 }
 
 function deleteMeeting(button) {
@@ -328,12 +310,22 @@ function deleteMeeting(button) {
         meetingCard.remove();
     }
 }
+
 window.onload = function() {
     const url_params = new URLSearchParams(window.location.search);
     const role = url_params.get('role'); /* retrieving the type of user (mentor/mentee) from url*/
     
     if (document.body.id === 'login-page') {
         document.getElementById('role').value = role;
+        // Add sign-up link only for mentees
+        const signupOption = document.getElementById('signup-option');
+        if (role === 'mentee') {
+            signupOption.innerHTML = `Don't have an account? <a href="signup.html">Sign up</a>`;
+        } else {
+            signupOption.style.display = 'none';
+        }
+        
+        
         // Add sign-up link only for mentees
         const signupOption = document.getElementById('signup-option');
         if (role === 'mentee') {
@@ -349,7 +341,7 @@ window.onload = function() {
                 if (role === 'mentor') {
                     window.location.href = 'mentor_menteeslist.html';
                 } else if (role === 'mentee') {
-                    window.location.href = 'main.html';
+                    window.location.href = 'main.html?role=mentee';
                 }
             } else {
                 alert('No role detected. Please select your role');
