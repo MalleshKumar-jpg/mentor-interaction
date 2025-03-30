@@ -334,6 +334,14 @@ window.onload = function() {
     
     if (document.body.id === 'login-page') {
         document.getElementById('role').value = role;
+        // Add sign-up link only for mentees
+        const signupOption = document.getElementById('signup-option');
+        if (role === 'mentee') {
+            signupOption.innerHTML = `Don't have an account? <a href="signup.html">Sign up</a>`;
+        } else {
+            signupOption.style.display = 'none';
+        }
+        
         document.getElementById('login-form').addEventListener('submit', function(event) {
             event.preventDefault();
             if (role) {
@@ -346,6 +354,49 @@ window.onload = function() {
             } else {
                 alert('No role detected. Please select your role');
             }
+        });
+    }
+    
+    if (document.body.id === 'signup-page') {
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Validate password confirmation
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            const passwordRegex=/^[a-zA-Z\d!@#$%^&.?]{8,}$/
+            if (!passwordRegex.test(password)) {
+                alert('Password must be at least 8 characters long and contain at least one letter, one number, and one special character.');
+                return;
+            }
+            // Basic validation for email
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.com$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            //Full name validation
+            const fullname = document.getElementById('fullname').value;
+            const fullnameRegex = /^[a-zA-Z][a-zA-Z\s\.]*$/;
+            if (!fullnameRegex.test(fullname)) {
+                alert('Please enter a valid full name');
+                return;
+            }
+            // Basic validation for email
+            const username = document.getElementById('username').value;
+            const usernameRegex = /^[a-zA-Z][a-zA-Z0-9_]{2,14}$/;
+            if (!usernameRegex.test(username)) {
+                alert('Please enter a valid username');
+                return;
+            }
+            // If validation passes
+            alert('Account created successfully! Please log in.');
+            window.location.href = 'login.html?role=mentee';
         });
     }
 
