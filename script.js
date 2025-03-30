@@ -132,7 +132,14 @@ function editOrSaveTasks(button) {
             taskDate.focus();
             return;
         }
-
+        //Date Validation
+        const today = new Date();
+        const selectedDate = new Date(taskDate.value);
+        if (selectedDate <= today) {
+            alert('Please select a date after today for the task.');
+            taskDate.focus();
+            return;
+        }
         taskTitle.setAttribute('readonly', true);
         taskDate.setAttribute('readonly', true);
         taskTitle.style.border = '';
@@ -161,7 +168,14 @@ function addTask(button) {
         document.querySelector('#task-date').focus();
         return;
     }
-
+    //Date Validation
+    const today = new Date();
+    const selectedDate = new Date(taskDate);
+    if (selectedDate <= today) {
+        alert('Please select a date after today for the task.');
+        document.querySelector('#task-date').focus();
+        return;
+    }
     const newTask = document.createElement('div');
     newTask.classList.add('task-container');
     newTask.innerHTML = `
@@ -229,7 +243,14 @@ function editOrSaveMeeting(button) {
             meetingDate.focus();
             return;
         }
-
+        //Meeting Date Validation
+        const today = new Date();
+        const selectedDate = new Date(meetingDate);
+        if (selectedDate > today) {
+            alert('Please select a date on or before today for the meeting.');
+            document.querySelector('#meeting-date').focus();
+            return;
+        }
         noteContent.contentEditable = 'false';        
         noteContent.style.border = 'none';      
         noteContent.style.padding = '0';
@@ -261,7 +282,14 @@ function addMeeting() {
         document.querySelector('#meeting-date').focus();
         return;
     }
-
+    //Meeting Date Validation
+    const today = new Date();
+    const selectedDate = new Date(meetingDate);
+    if (selectedDate > today) {
+        alert('Please select a date on or before today for the meeting.');
+        document.querySelector('#meeting-date').focus();
+        return;
+    }
     const newMeetingCard = document.createElement('div');
     newMeetingCard.classList.add('meeting-card');
     newMeetingCard.innerHTML = `
