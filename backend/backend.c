@@ -82,14 +82,14 @@ void delete_meeting(struct User* mentee);
 
 int hash_function(char* str) {
     int hash = 0;
-    for (i =0; str[i] != '\0'; i++) {
+    for (i = 0; str[i] != '\0'; i++) {
         hash = hash * 31 + str[i];
     }
     return hash % HASH_SIZE;
 }
 
 void sample_data() {
-    for (i =0; i < HASH_SIZE; i++) {
+    for (i = 0; i < HASH_SIZE; i++) {
         hash_table[i] = NULL;
     }
     
@@ -98,7 +98,6 @@ void sample_data() {
 
     add_user("mentee1", "pass1", "Rajesh", "rajesh@yahoo.com", ROLE_MENTEE);
 
-    // Setup mentee's details
     struct User* rajesh = authenticate_user("mentee1", "pass1", ROLE_MENTEE);
     mentor->mentees[0] = rajesh;
     mentor->mentee_count = 1;
@@ -236,7 +235,7 @@ int is_date_valid(char* date) {
     if (strlen(date) != 10 || date[2] != '-' || date[5] != '-')
         return 0;
     
-    for (i =0; i < 10; i++) {
+    for (i = 0; i < 10; i++) {
         if (i == 2 || i == 5){
             continue;
         } 
@@ -418,7 +417,7 @@ void mentor_menu() {
         printf("YOUR MENTEES:\n");
         printf("------------------------------------------\n");
         
-        for (i =0; i < mentor->mentee_count; i++) {
+        for (i = 0; i < mentor->mentee_count; i++) {
             printf("[%d] %s\n", i + 1, mentor->mentees[i]->name);
         }
 
@@ -509,7 +508,37 @@ void mentee_menu() {
 }
 
 void view_mentee_details(struct User* mentee) {
-    //add code
+    display_header("MENTEE DETAILS");
+    printf("Username: %s\n", mentee->username);
+    printf("Name: %s\n", mentee->name);
+    printf("Email: %s\n", mentee->email);
+    printf("Phone: %s\n", mentee->phone);
+    printf("Department: %s\n", mentee->department);
+    printf("Year of Study: %s\n", mentee->year);
+    printf("Digital ID: %s\n", mentee->digital_id);
+    printf("Registration Number: %s\n\n", mentee->reg_no);
+    printf("Emergency Contact:\n");
+    printf("Parent Phone: %s\n", mentee->parent_phone);
+    printf("Parent Email: %s\n\n", mentee->parent_email);
+    
+    //display options to modify only if user is mentor
+    if (current_user->role == ROLE_MENTEE) {
+        int choice;
+        
+        printf("[1] Edit My Details\n");
+        printf("[0] Back\n\n");
+        
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        getchar(); 
+        
+        if (choice == 1) {
+            edit_mentee_details(mentee);
+        }
+    } else {
+        printf("Press Enter to continue...");
+        getchar();
+    }
 }
 
 void edit_mentee_details(struct User* mentee) {
@@ -529,7 +558,7 @@ void add_task(struct User* mentee) {
  }
  
  void edit_task(struct User* mentee) {
-    //add code
+    //add code 
  }
  
  void delete_task(struct User* mentee) {
