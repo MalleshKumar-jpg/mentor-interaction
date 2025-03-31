@@ -60,6 +60,9 @@ void add_user(char* username, char* password, char* name, char* email, int role)
 struct User* authenticate_user(char* username, char* password, int role);
 int username_exists(char* username);
 int is_valid_email(char* email);
+int is_valid_phone(char* phone);
+int is_valid_digital_id(char* digital_id);
+int is_valid_reg_no(char* reg_no);
 int is_date_valid(char* date);
 void display_header(char* title);
 void main_menu();
@@ -204,7 +207,7 @@ int username_exists(char* username) {
     return 0; 
 }
 
-// returns 1 if valid
+// returns 1 if valid email
 int is_valid_email(char* email) {
     char* at_symbol = strchr(email, '@'); //find @ 
     
@@ -229,8 +232,37 @@ int is_valid_email(char* email) {
     return 1;
 }
 
+int is_valid_phone(char* phone) {
+    if (strlen(phone) != 10) return 0;
+    
+    for (i = 0; i < strlen(phone); i++) {
+        if (!isdigit(phone[i])) return 0;
+    }
+    
+    return 1;
+}
+\
+int is_valid_digital_id(char* digital_id) {
+    if (strlen(digital_id) != 7) return 0;
+    
+    for (i = 0; i < strlen(digital_id); i++) {
+        if (!isdigit(digital_id[i])) return 0;
+    }
+    
+    return 1;
+}
+\
+int is_valid_reg_no(char* reg_no) {
+    if (strlen(reg_no) != 13) return 0;
+    
+    for (i = 0; i < strlen(reg_no); i++) {
+        if (!isdigit(reg_no[i])) return 0;
+    }
+    
+    return 1;
+}
 
-// returns 1 if valid
+// returns 1 if date is valid
 int is_date_valid(char* date) {
     if (strlen(date) != 10 || date[2] != '-' || date[5] != '-')
         return 0;
@@ -542,7 +574,115 @@ void view_mentee_details(struct User* mentee) {
 }
 
 void edit_mentee_details(struct User* mentee) {
-    //add code
+    char input[STR_LEN];
+    
+    display_header("EDIT DETAILS");
+    
+    printf("Current Name: %s\n", mentee->name);
+    printf("New Name (or press Enter to keep current): ");
+    scanf("%[^\n]", input); 
+
+    if (strlen(input) > 0) {
+        strcpy(mentee->name, input);
+    }
+    
+    getchar();
+    printf("\nCurrent Email: %s\n", mentee->email);
+    printf("New Email (or press Enter to keep current): ");
+    scanf("%[^\n]", input); 
+
+    if (strlen(input) > 0) {
+        if (is_valid_email(input)) {
+            strcpy(mentee->email, input);
+        } else {
+            printf("Invalid email format. Email remains unchanged.\n");
+        }
+    }
+    
+    getchar();
+    printf("\nCurrent Phone: %s\n", mentee->phone);
+    printf("New Phone (or press Enter to keep current): ");
+    scanf("%[^\n]", input); 
+
+    if (strlen(input) > 0) {
+        if (is_valid_phone(input)) {
+            strcpy(mentee->phone, input);
+        } else {
+            printf("Invalid phone number. Phone remains unchanged.\n");
+        }
+    }
+    
+    getchar();
+    printf("\nCurrent Department: %s\n", mentee->department);
+    printf("New Department (or press Enter to keep current): ");
+    scanf("%[^\n]", input); 
+
+    if (strlen(input) > 0) {
+        strcpy(mentee->department, input);
+    }
+    
+    getchar();
+    printf("\nCurrent Year of Study: %s\n", mentee->year);
+    printf("New Year of Study (or press Enter to keep current): ");
+    scanf("%[^\n]", input); 
+
+    if (strlen(input) > 0) {
+        strcpy(mentee->year, input);
+    }
+    
+    getchar();
+    printf("\nCurrent Digital ID: %s\n", mentee->digital_id);
+    printf("New Digital ID (7 digits, or press Enter to keep current): ");
+    scanf("%[^\n]", input); 
+
+    if (strlen(input) > 0) {
+        if (is_valid_digital_id(input)) {
+            strcpy(mentee->digital_id, input);
+        } else {
+            printf("Invalid Digital ID format. Digital ID remains unchanged.\n");
+        }
+    }
+    
+    getchar();
+    printf("\nCurrent Registration Number: %s\n", mentee->reg_no);
+    printf("New Registration Number (13 digits, or press Enter to keep current): ");
+    scanf("%[^\n]", input); 
+
+    if (strlen(input) > 0) {
+        if (is_valid_reg_no(input)) {
+            strcpy(mentee->reg_no, input);
+        } else {
+            printf("Invalid Registration Number format. Registration Number remains unchanged.\n");
+        }
+    }
+    
+    getchar();
+    printf("\nCurrent Parent Phone: %s\n", mentee->parent_phone);
+    printf("New Parent Phone (or press Enter to keep current): ");
+    scanf("%[^\n]", input); 
+
+    if (strlen(input) > 0) {
+        if (is_valid_phone(input)) {
+            strcpy(mentee->parent_phone, input);
+        } else {
+            printf("Invalid phone number. Parent phone remains unchanged.\n");
+        }
+    }
+    
+    getchar();
+    printf("\nCurrent Parent Email: %s\n", mentee->parent_email);
+    printf("New Parent Email (or press Enter to keep current): ");
+    scanf("%[^\n]", input); 
+
+    if (strlen(input) > 0) {
+        if (is_valid_email(input)) {
+            strcpy(mentee->parent_email, input);
+        } else {
+            printf("Invalid email format. Parent email remains unchanged.\n");
+        }
+    }
+    
+    printf("\nDetails updated successfully!\n");
 }
 
 void manage_tasks(struct User* mentee) {
