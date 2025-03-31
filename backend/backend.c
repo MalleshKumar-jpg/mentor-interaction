@@ -24,7 +24,6 @@ struct Meeting_note {
 };
 
 struct User {
-    // Base user information
     char username[STR_LEN];
     char password[STR_LEN];
     char name[STR_LEN];
@@ -114,6 +113,24 @@ void sample_data() {
     strcpy(rajesh->parent_email, "parent@yahoo.com");
     rajesh->tasks = NULL;
     rajesh->meetings = NULL;
+    
+    struct Task* task1 = (struct Task*)malloc(sizeof(struct Task));
+    strcpy(task1->description, "Read a book");
+    strcpy(task1->due_date, "15-04-2025");
+    task1->next = NULL;
+    rajesh->tasks = task1;
+    
+    struct Task* task2 = (struct Task*)malloc(sizeof(struct Task));
+    strcpy(task2->description, "participate in speaking competitions");
+    strcpy(task2->due_date, "10-05-2025");
+    task2->next = NULL;
+    task1->next = task2;
+    
+    struct Task* task3 = (struct Task*)malloc(sizeof(struct Task));
+    strcpy(task3->description, "ask doubts in class");
+    strcpy(task3->due_date, "25-05-2025");
+    task3->next = NULL;
+    task2->next = task3;
     
     struct Meeting_note* meeting1 = (struct Meeting_note*)malloc(sizeof(struct Meeting_note));
     strcpy(meeting1->date, "15-03-2025");
@@ -224,7 +241,6 @@ int is_valid_email(char* email) {
         return 0;
     }
 
-    //
     if (dot[1] == '\0') {
         return 0;
     }
@@ -241,7 +257,7 @@ int is_valid_phone(char* phone) {
     
     return 1;
 }
-\
+
 int is_valid_digital_id(char* digital_id) {
     if (strlen(digital_id) != 7) return 0;
     
@@ -251,7 +267,7 @@ int is_valid_digital_id(char* digital_id) {
     
     return 1;
 }
-\
+
 int is_valid_reg_no(char* reg_no) {
     if (strlen(reg_no) != 13) return 0;
     
@@ -262,7 +278,6 @@ int is_valid_reg_no(char* reg_no) {
     return 1;
 }
 
-// returns 1 if date is valid
 int is_date_valid(char* date) {
     if (strlen(date) != 10 || date[2] != '-' || date[5] != '-')
         return 0;
@@ -279,7 +294,6 @@ int is_date_valid(char* date) {
     return 1;
 }
 
-// Display header
 void display_header(char* title) {
     printf("\n=========================================\n");
     printf("                 MENTOREE\n");
@@ -335,7 +349,6 @@ int register_mentee() {
     fgets(confirm_password, STR_LEN, stdin);
     confirm_password[strcspn(confirm_password, "\n")] = 0;
 
-    // equal password check
     if (strcmp(password, confirm_password) != 0) {
         printf("\nPasswords do not match. Registration failed.\n");
         return 0;
@@ -684,23 +697,226 @@ void edit_mentee_details(struct User* mentee) {
 }
 
 void manage_tasks(struct User* mentee) {
-    //add code
+    int choice;
+    
+    while (1) {
+        display_header("PROGRESS TRACKING");
+
+        view_tasks(mentee);
+        printf("\nOptions:\n");
+
+        if (current_user->role == ROLE_MENTOR) {
+            printf("[1] Add New Task\n");
+            printf("[2] Edit Task\n");
+            printf("[3] Delete Task\n");
+        } 
+
+        printf("[0] Back\n\n");
+        
+        printf("Enter your choice: ");
+        
+        scanf("%d", &choice);
+        
+        if (choice == 0) {
+            return;
+        } else if (choice == 1 && current_user->role == ROLE_MENTOR) {
+            add_task(mentee);
+        } else if (choice == 2 && current_user->role == ROLE_MENTOR) {
+            edit_task(mentee);
+        } else if (choice == 3 && current_user->role == ROLE_MENTOR) {
+            delete_task(mentee);
+        } else {
+            printf("\nInvalid choice. Please try again.\n");
+        }
+    }
 }
 
 void view_tasks(struct User* mentee) {
-    //add code
+    struct Task* current = mentee->tasks;
+    
+    printf("Tasks for %s:\n", mentee->name);
+    printf("------------------------------------------\n");
+    
+    if (current == NULL) {
+        printf("No tasks assigned yet.\n");
+        return;
+    }
+    
+    int count = 1;
+    while (current != NULL) {
+        printf("[%d] %s (Due: %s)\n", count++, current->description, current->due_date);
+        current = current->next;
+    }
 }
 
 void add_task(struct User* mentee) {
-    //add code
+    display_header("ADD NEW TASK");
+
+    struct Task* new_task = (struct Task*)malloc(sizeof(struct Task));
+    
+    if (new_task == NULL) {
+        printf("\nMemory allocation failed.\n");
+        return;
+    }
+    
+    char input[STR_LEN];
+    
+    do {
+        printf("Enter task description: ");
+        getchar();
+        scanf("%[^\n]", input); 
+        
+        if (strlen(input) == 0) {
+            printf("Task description cannot be empty. Please enter a description.\n");
+        }
+    } while (strlen(input) == 0);
+    
+    strcpy(new_task->description, input);
+    
+    do {
+        printf("Enter due date (DD-MM-YYYY): ");
+        getchar();
+        scanf("%[^\n]", input); 
+        
+        if (!is_date_valid(input)) {
+            printf("Invalid date format. Please use DD-MM-YYYY format.\n");
+        }
+    } while (!is_date_valid(input));
+    
+    strcpy(new_task->due_date, input);
+    
+    new_task->next = NULL;
+    
+    if (mentee->tasks == NULL) {
+        mentee->tasks = new_task;
+    } else {
+        struct Task* current = mentee->tasks;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = new_task;
+    }
+    
+    printf("\nTask added successfully!\n");
  }
  
  void edit_task(struct User* mentee) {
-    //add code 
+    struct Task* current;
+    int task_no;
+    int count = 1;
+    char input[STR_LEN];
+    
+    view_tasks(mentee);
+    
+    if (mentee->tasks == NULL) {
+        printf("\nNo tasks to edit.\n");
+        return;
+    }
+    
+    printf("\nEnter task number to edit (0 to cancel): ");
+    scanf("%d", &task_no);
+    
+    if (task_no <= 0) {
+        printf("Task edit cancelled.\n");
+        return;
+    }
+    
+    current = mentee->tasks;
+    while (current != NULL && count < task_no) {
+        current = current->next;
+        count++;
+    }
+    
+    if (current == NULL) {
+        printf("\nInvalid task number.\n");
+        return;
+    }
+    
+    display_header("EDIT TASK");
+    
+    printf("Current description: %s\n", current->description);
+    printf("New description (or press Enter to keep current): ");
+
+    getchar();
+
+    fgets(input, DATE_LEN, stdin);
+    input[strcspn(input, "\n")] = 0;
+
+    if (strlen(input) > 0) {
+        strcpy(current->description, input);
+    }
+    
+    printf("\nCurrent due date: %s\n", current->due_date);
+    printf("New due date (DD-MM-YYYY, or press Enter to keep current): ");
+    
+    fgets(input, DATE_LEN, stdin);
+    input[strcspn(input, "\n")] = 0;
+
+    if (strlen(input) > 0) {
+        if (is_date_valid(input)) {
+            strcpy(current->due_date, input);
+        } else {
+            printf("Invalid date format. Due date remains unchanged.\n");
+        }
+    }
+    
+    printf("\nTask updated successfully!\n");
  }
  
  void delete_task(struct User* mentee) {
-    //add code
+    int task_no, count = 1;
+    char confirm;
+    
+    view_tasks(mentee);
+    
+    if (mentee->tasks == NULL) {
+        printf("\nNo tasks to delete.\n");
+        return;
+    }
+    
+    printf("\nEnter task number to delete (0 to cancel): ");
+    scanf("%d", &task_no);
+    getchar(); 
+    
+    if (task_no <= 0) {
+        printf("Task deletion cancelled.\n");
+        return;
+    }
+    
+    printf("Are you sure you want to delete this task? (y/n): ");
+    scanf("%c", &confirm);
+    getchar();
+    
+    if (tolower(confirm) != 'y') {
+        printf("\nTask deletion cancelled.\n");
+        return;
+    }
+    
+    if (task_no == 1) {
+        struct Task* temp = mentee->tasks;
+        mentee->tasks = mentee->tasks->next;
+        free(temp);
+        printf("\nTask deleted successfully!\n");
+        return;
+    }
+    
+    struct Task* prev = mentee->tasks;
+    count = 1;
+    while (prev->next != NULL && count < task_no - 1) {
+        prev = prev->next;
+        count++;
+    }
+    
+    if (prev->next == NULL) {
+        printf("\nInvalid task number.\n");
+        return;
+    }
+    
+    struct Task* temp = prev->next;
+    prev->next = temp->next;
+    free(temp);
+    
+    printf("\nTask deleted successfully!\n");
  }
  
  void manage_meetings(struct User* mentee) {
@@ -874,7 +1090,6 @@ void add_task(struct User* mentee) {
     int meeting_no, count = 1;
     char confirm;
     
-    // Display meetings first
     view_meetings(mentee);
     
     if (mentee->meetings == NULL) {
