@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -488,10 +487,8 @@ h3 {
      max-height: none;
    }
 } 
- 
- 
 </style>
-</he ad>
+</head>
 
 <body id="main-page">
 <a href="mentor_menteeslist.html?role=mentor" class="mentor-only-btn" style="text-decoration: none; color: white;">
@@ -500,7 +497,7 @@ h3 {
 <div class="header mentee-only-btn" id="user-role-mentee">MENTEE</div>
  
 <div class="sidebar">
-<p id=  "mentee-name">MENTEE 1</p>
+<p id="mentee-name">MENTEE 1</p>
 <a href="#details" class="nav-link">DETAILS</a>
 <a href="#progress" class="nav-link">PROGRESS TRACKING</a>
 <a href="#notes" class="nav-link">MEETING NOTES</a>
@@ -508,54 +505,54 @@ h3 {
 </div>
  
 <div class="main-content">
-<div id="detai ls" class="details-container content">
+<div id="details" class="details-container content">
   <h2>DETAILS </h2>
   <div class="form-group">
     <label class="form-label" for="name">Full Name:</label>
     <input type="text" id="name" class="input-box" name="name" value="Rajesh" readonly>
   </div> 
   <div class="form-group">
-    <label  class="form-label" for="email">Email Address:</label>
-    <inpu t type="email" id="email" class="input-box" name="email" value="rajesh@yahoo.com" readonly>
-  </div> 
-  <div class ="form-group">
-    <label   class="form-label" for="phone">Phone Number:</label>
-    <inpu t type="tel" id="phone" class="input-box" name="phone" value="1234567890" readonly>
-  </div> 
-  <div clas s="form-group">
-    <label  class="form-label" for="year">Year of Study:</label>
-    <inpu t type="text" id="year" class="input-box" name="year" value="First Year" readonly>
-  </div> 
-  <div clas s="form-group">
-    <label  class="form-label" for="department">Department:</label>
-    <inpu t type="text" id="department" class="input-box" name="department" value="Computer Science" readonly>
-  </div> 
-  <div clas  s="form-group">
-    <label  class="form-label" for="digitalid">Digital ID:</label>
-    <inpu t type="text" id="digitalid" class="input-box" name="digitalid" value="2420491" readonly>
-  </div> 
-  <div clas s="form-group">
-    <label  class="form-label" for="regno">Registration Number:</label>
-    <inpu t type="text" id="regno" class="input-box" name="regno" value="3122245002123" readonly>
-  </div> 
-  <div class ="form-group">
-    <label  class="form-label" for="parentphone">Parents Phone Number:</label>
-    <inpu  t type="text" id="parentphone" class="input-box" name="parentphone" value="9876543210" readonly>
+    <label class="form-label" for="email">Email Address:</label>
+    <input type="email" id="email" class="input-box" name="email" value="rajesh@yahoo.com" readonly>
   </div> 
   <div class="form-group">
-    <label  class="form-label" for="parentid">Parents Email ID:</label>
+    <label class="form-label" for="phone">Phone Number:</label>
+    <input type="tel" id="phone" class="input-box" name="phone" value="1234567890" readonly>
+  </div> 
+  <div class="form-group">
+    <label class="form-label" for="year">Year of Study:</label>
+    <input type="text" id="year" class="input-box" name="year" value="First Year" readonly>
+  </div> 
+  <div class="form-group">
+    <label class="form-label" for="department">Department:</label>
+    <input type="text" id="department" class="input-box" name="department" value="Computer Science" readonly>
+  </div> 
+  <div class="form-group">
+    <label class="form-label" for="digitalid">Digital ID:</label>
+    <input type="text" id="digitalid" class="input-box" name="digitalid" value="2420491" readonly>
+  </div> 
+  <div class="form-group">
+    <label class="form-label" for="regno">Registration Number:</label>
+    <input type="text" id="regno" class="input-box" name="regno" value="3122245002123" readonly>
+  </div> 
+  <div class="form-group">
+    <label class="form-label" for="parentphone">Parents Phone Number:</label>
+    <input type="text" id="parentphone" class="input-box" name="parentphone" value="9876543210" readonly>
+  </div> 
+  <div class="form-group">
+    <label class="form-label" for="parentid">Parents Email ID:</label>
     <input type="text" id="parentid" class="input-box" name="parentid" value="parent@yahoo.com" readonly>
   </div> 
   <button class="edit-btn edit-details-btn mentee-only-btn">Edit</button>
 </div> 
 <div id="progress" class="progress-container content">
   <h2>PROGRESS TRACKING</h2>
-  <div  class="task-container add-task-container mentor-only-container">
+  <div class="task-container add-task-container mentor-only-container">
     <input class="input-box" placeholder="Add Task" id="task-name">
      <input type="date" class="input-date" id="task-date">
      <button class="add-task mentor-only-btn">+</button>
    </div>
-   <h3 style = "margin-bottom:30px">Development Practices:</h3>
+   <h3 style="margin-bottom:30px">Development Practices:</h3>
  
   <div class="task-container">
     <input type="text" class="input-box task-name" value="Read a book" readonly>
@@ -564,7 +561,7 @@ h3 {
      <button class="delete-task mentor-only-btn">X</button>
    </div>
  
-  <div  class="task-container">
+  <div class="task-container">
     <input type="text" class="input-box task-name" value="participate in speaking competitions" readonly>
     <input type="date" class="input-date task-date" value="2025-05-10" readonly>
      <button class="edit-btn edit-task mentor-only-btn">Edit</button>
@@ -579,27 +576,27 @@ h3 {
    </div>
 </div>
  
-<div  id="notes" class="notes-container content">
-  <h 2>MEETING HISTORY</h2>
+<div id="notes" class="notes-container content">
+  <h2>MEETING HISTORY</h2>
     
-  <h3  class="mentor-only-btn">Add New Meeting</h3>
-  <i nput type="date" id="meeting-date" class="input-date mentor-only-btn" value="2025-03-24">
+  <h3 class="mentor-only-btn">Add New Meeting</h3>
+  <input type="date" id="meeting-date" class="input-date mentor-only-btn" value="2025-03-24">
   <textarea id="meeting-summary" rows="7" class="summary-input mentor-only-btn"
      placeholder="Enter meeting notes"></textarea>
    <button class="save-btn mentor-only-btn">Save</button>
  
-  <div class="meeti  ng-history">
-    <div class="me eting-card">
-      <div class= "meeting-header">
-          <input  type="date" class="meeting-date" value="2025-03-15" readonly>
-          <butt on class="edit-note mentor-only-btn">
+  <div class="meeting-history">
+    <div class="meeting-card">
+      <div class="meeting-header">
+          <input type="date" class="meeting-date" value="2025-03-15" readonly>
+          <button class="edit-note mentor-only-btn">
                <img src="images/pencil_edit.png" alt="Edit">
-          </b utton>
+          </button>
       </div> 
       <div class="meeting-content"> 
-          <p>Reviewed the mentee's recent achieve  ments and identified areas for improvement. The mentor advised setting
-            clearer priorities for upcoming task s and encouraged the mentee to maintain a detailed to-do list. The
-            mentee committed to updating their  progress regularly.</p>
+          <p>Reviewed the mentee's recent achievements and identified areas for improvement. The mentor advised setting
+            clearer priorities for upcoming tasks and encouraged the mentee to maintain a detailed to-do list. The
+            mentee committed to updating their progress regularly.</p>
             <button class="delete-meeting mentor-only-btn">
               <img src="images/trash_icon.png" alt="Delete">
             </button>
@@ -614,7 +611,7 @@ h3 {
           </button>
       </div>
       <div class="meeting-content">
-          <p>Focused on improving communicatio n between the mentor and mentee. The mentor suggested scheduling brief
+          <p>Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
             weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared
             document for tracking goals and milestones.Focused on improving communication between the mentor and mentee. The mentor suggested scheduling brief
             weekly check-ins to track progress and address concerns more efficiently. Both agreed to maintain a shared

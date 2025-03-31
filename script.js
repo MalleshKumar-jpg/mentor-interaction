@@ -286,7 +286,7 @@ function addMeeting() {
         </div>
         <div class="meeting-content">
             <p>${meetingSummary}</p>
-            <button class="delete-meeting mentor-only-btn">🗑️</button>
+            <button class="delete-meeting mentor-only-btn"><img src="images/trash_icon.png" alt="Delete"></button>
         </div>
     `;
 
