@@ -305,7 +305,6 @@ int register_mentee() {
 
     printf("Email: ");
 
-    getchar();
     fgets(email, STR_LEN, stdin);
     email[strcspn(email, "\n")] = 0;
 
@@ -316,7 +315,6 @@ int register_mentee() {
     
     printf("Username: ");
 
-    getchar();
     fgets(username, STR_LEN, stdin);
     username[strcspn(username, "\n")] = 0;
     if (username_exists(username)) {
