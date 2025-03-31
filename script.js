@@ -326,7 +326,6 @@ window.onload = function() {
     const role = url_params.get('role'); /* retrieving the type of user (mentor/mentee) from url*/
     
     if (document.body.id === 'login-page') {
-        document.getElementById('role').value = role;
         // Add sign-up link only for mentees
         const signupOption = document.getElementById('signup-option');
         if (role === 'mentee') {
@@ -361,7 +360,7 @@ window.onload = function() {
                 alert('Passwords do not match!');
                 return;
             }
-            const passwordRegex=/^[a-zA-Z\d!@#$%^&.?]{8,}$/
+            const passwordRegex=/^[a-zA-Z0-9!@#$%^&.?]{8,}$/
             if (!passwordRegex.test(password)) {
                 alert('Password must be at least 8 characters long and contain at least one letter, one number, and one special character.');
                 return;
@@ -417,7 +416,6 @@ window.onload = function() {
         if (storedRole == 'mentor') {
             document.querySelectorAll('.mentee-only-btn').forEach(btn => btn.style.display = 'none'); /* hiding the class of mentee-only-btn */
             
-            // Change the logout button color for mentors to match their theme
             const logoutButton = document.querySelector('.logout-button');
             if (logoutButton) {
                 logoutButton.style.backgroundColor = '#0074D9';
