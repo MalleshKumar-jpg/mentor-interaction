@@ -6,7 +6,7 @@
 #define STR_LEN 100
 #define DATE_LEN 11
 #define SUMMARY_LEN 500
-#define HASH_SIZE 15
+#define HASH_SIZE 10
 #define MAX_MENTEES 10
 #define ROLE_MENTEE 0
 #define ROLE_MENTOR 1
@@ -82,6 +82,14 @@ void add_meeting(struct User* mentee);
 void edit_meeting(struct User* mentee);
 void delete_meeting(struct User* mentee);
 
+// File handling
+void save_users_to_file();
+void load_users_from_file();
+void save_mentor_mentees();
+void load_mentor_mentees();
+void save_all_data();
+void load_all_data();
+
 int hash_function(char* str) {
     int hash = 0;
     for (i = 0; str[i] != '\0'; i++) {
@@ -90,6 +98,170 @@ int hash_function(char* str) {
     return hash % HASH_SIZE;
 }
 
+void save_users_to_file() {
+    FILE *file = fopen("users.csv", "w");
+    if (file == NULL) {
+        printf("Error opening users file for writing.\n");
+        return;
+    }
+
+    fprintf(file, "username,password,name,email,role,phone,department,year,digital_id,reg_no,parent_phone,parent_email\n");
+    
+    for (i = 0; i < HASH_SIZE; i++) {
+        struct User* current = hash_table[i];
+        while (current != NULL) {
+            fprintf(file, "%s,%s,%s,%s,%d,%s,%s,%s,%s,%s,%s,%s\n", 
+                current->username, 
+                current->password, 
+                current->name, 
+                current->email, 
+                current->role,
+                current->phone, 
+                current->department, 
+                current->year, 
+                current->digital_id, 
+                current->reg_no,
+                current->parent_phone,
+                current->parent_email
+            );
+            current = current->next;
+        }
+    }
+    
+    fclose(file);
+}
+
+void load_users_from_file() {
+    FILE *file = fopen("users.csv", "r");
+    if (file == NULL) {
+        printf("Users file not found. Starting with empty database.\n");
+        return;
+    }
+    
+    char line[1000];
+    
+    // Skip header line
+    fgets(line, sizeof(line), file);
+    
+    while (fgets(line, sizeof(line), file)) {
+        line[strcspn(line, "\n")] = 0;
+        
+        char username[STR_LEN], password[STR_LEN], name[STR_LEN], email[STR_LEN];char phone[STR_LEN], department[STR_LEN], year[STR_LEN], digital_id[STR_LEN];char reg_no[STR_LEN], parent_phone[STR_LEN], parent_email[STR_LEN];
+        int role;
+        
+        // Note the order matches the fprintf in save_users_to_file
+        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%d,%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,]", 
+            username, password, name, email, &role,
+            phone, department, year, digital_id, reg_no, 
+            parent_phone, parent_email);
+        
+        // Add user with all details
+        struct User* new_user = (struct User*)malloc(sizeof(struct User));
+        if (new_user == NULL) {
+            printf("Memory allocation failed.\n");
+            continue;
+        }
+        
+        strcpy(new_user->username, username);
+        strcpy(new_user->password, password);
+        strcpy(new_user->name, name);
+        strcpy(new_user->email, email);
+        new_user->role = role;
+        
+        // Mentee-specific details
+        strcpy(new_user->phone, phone);
+        strcpy(new_user->department, department);
+        strcpy(new_user->year, year);
+        strcpy(new_user->digital_id, digital_id);
+        strcpy(new_user->reg_no, reg_no);
+        strcpy(new_user->parent_phone, parent_phone);
+        strcpy(new_user->parent_email, parent_email);
+        
+        // Initialize tasks and meetings
+        new_user->tasks = NULL;
+        new_user->meetings = NULL;
+        
+        // Initialize mentee/mentor specific fields
+        if (role == ROLE_MENTOR) {
+            new_user->mentee_count = 0;
+            mentor = new_user;
+        } else {
+            new_user->mentee_count = 0;
+        }
+        
+        // Add to hash table
+        int index = hash_function(username);
+        new_user->next = hash_table[index];
+        hash_table[index] = new_user;
+    }
+    
+    fclose(file);
+}
+
+void save_mentor_mentees() {
+    if (mentor == NULL) return;
+    
+    FILE *file = fopen("mentees_list.csv", "w");
+    if (file == NULL) {
+        printf("Error opening mentees list file for writing.\n");
+        return;
+    }
+    
+    fprintf(file, "username\n");
+    
+    for (i = 0; i < mentor->mentee_count; i++) {
+        fprintf(file, "%s\n", mentor->mentees[i]->username);
+    }
+    
+    fclose(file);
+}
+
+void load_mentor_mentees() {
+    if (mentor == NULL) return;
+    
+    FILE *file = fopen("mentees_list.csv", "r");
+    if (file == NULL) {
+        return; 
+    }
+    
+    mentor->mentee_count = 0;
+    
+    char line[STR_LEN];
+    
+    // Skip header line
+    fgets(line, sizeof(line), file);
+    
+    while (fgets(line, sizeof(line), file) && mentor->mentee_count < MAX_MENTEES) {
+        line[strcspn(line, "\n")] = 0;
+        
+        // Find the mentee by username
+        struct User* mentee = NULL;
+        int index = hash_function(line);
+        struct User* current = hash_table[index];
+        
+        while (current != NULL) {
+            if (strcmp(current->username, line) == 0 && current->role == ROLE_MENTEE) {
+                mentor->mentees[mentor->mentee_count++] = current;
+                break;
+            }
+            current = current->next;
+        }
+    }
+    
+    fclose(file);
+}
+
+void save_all_data() {
+    save_users_to_file();
+    save_mentor_mentees();
+}
+
+void load_all_data() {
+    load_users_from_file();
+    if (mentor != NULL) {
+        load_mentor_mentees();
+    }
+}
 void sample_data() {
     for (i = 0; i < HASH_SIZE; i++) {
         hash_table[i] = NULL;
@@ -361,6 +533,10 @@ int register_mentee() {
     if (mentor->mentee_count < MAX_MENTEES) {
         mentor->mentees[mentor->mentee_count] = new_mentee;
         mentor->mentee_count++;
+        
+        save_users_to_file();
+        save_mentor_mentees();
+        
         printf("\nRegistration successful! You can now log in as a mentee.\n");
         return 1;
 
@@ -445,7 +621,7 @@ void main_menu() {
             case 4:
                 printf("\nThank you for using MENTOREE. Goodbye!\n");
                 exit(0);
-            case 5:
+            default:
                 printf("\nInvalid choice. Please enter a number between 1 and 4.\n");
         }
     }
@@ -564,7 +740,7 @@ void view_mentee_details(struct User* mentee) {
     printf("Parent Phone: %s\n", mentee->parent_phone);
     printf("Parent Email: %s\n\n", mentee->parent_email);
     
-    //display options to modify only if user is mentor
+    //display options to modify only if user is mentee
     if (current_user->role == ROLE_MENTEE) {
         int choice;
         
@@ -691,7 +867,7 @@ void edit_mentee_details(struct User* mentee) {
         } else {
             printf("Invalid email format. Parent email remains unchanged.\n");
         }
-    }
+    } 
     
     printf("\nDetails updated successfully!\n");
 }
@@ -798,9 +974,9 @@ void add_task(struct User* mentee) {
     }
     
     printf("\nTask added successfully!\n");
- }
+}
  
- void edit_task(struct User* mentee) {
+void edit_task(struct User* mentee) {
     struct Task* current;
     int task_no;
     int count = 1;
@@ -861,9 +1037,9 @@ void add_task(struct User* mentee) {
     }
     
     printf("\nTask updated successfully!\n");
- }
+}
  
- void delete_task(struct User* mentee) {
+void delete_task(struct User* mentee) {
     int task_no, count = 1;
     char confirm;
     
@@ -917,9 +1093,9 @@ void add_task(struct User* mentee) {
     free(temp);
     
     printf("\nTask deleted successfully!\n");
- }
+}
  
- void manage_meetings(struct User* mentee) {
+void manage_meetings(struct User* mentee) {
     int choice;
     
     while (1) {
@@ -956,9 +1132,9 @@ void add_task(struct User* mentee) {
             printf("\nInvalid choice. Please try again.\n");
         }
     }
- }
+}
  
- void view_meetings(struct User* mentee) {
+void view_meetings(struct User* mentee) {
     struct Meeting_note* current = mentee->meetings;
     
     printf("Meeting Notes for %s:\n", mentee->name);
@@ -975,9 +1151,9 @@ void add_task(struct User* mentee) {
         printf("%s\n\n", current->summary);
         current = current->next;
     }
- }
+}
  
- void add_meeting(struct User* mentee) {
+void add_meeting(struct User* mentee) {
     display_header("ADD MEETING NOTE");
     
     struct Meeting_note* new_meeting = (struct Meeting_note*)malloc(sizeof(struct Meeting_note));
@@ -1022,9 +1198,9 @@ void add_task(struct User* mentee) {
     }
     
     printf("\nMeeting note added successfully!\n");
- }
+}
  
- void edit_meeting(struct User* mentee) {
+void edit_meeting(struct User* mentee) {
     struct Meeting_note* current;
     int meeting_no, count = 1;
     char input[SUMMARY_LEN];
@@ -1084,9 +1260,9 @@ void add_task(struct User* mentee) {
     }
     
     printf("\nMeeting note updated successfully!\n");
- }
+}
  
- void delete_meeting(struct User* mentee) {
+void delete_meeting(struct User* mentee) {
     int meeting_no, count = 1;
     char confirm;
     
@@ -1138,11 +1314,21 @@ void add_task(struct User* mentee) {
     free(temp);
     
     printf("\nMeeting note deleted successfully!\n");
- }
+}
  
- int main() {
-    sample_data();
+int main() {
+    // Initialize hash table
+    for (i = 0; i < HASH_SIZE; i++) {
+        hash_table[i] = NULL;
+    }
+    
+    load_all_data();
+    
+    if (mentor == NULL) {
+        sample_data();
+        save_all_data();
+    }
     
     main_menu();
     return 0;
- }
+}
