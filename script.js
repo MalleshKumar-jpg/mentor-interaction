@@ -474,14 +474,14 @@ window.onload = function() {
             window.location.hash = 'details';
         }
         
-        const currentHash = window.location.hash || '#details';
+        const currentHash = window.location.hash;
         document.querySelector(`.sidebar a[href="${currentHash}"]`)?.classList.add('active');
         
         const contentId = currentHash.substring(1);
         document.getElementById(contentId)?.classList.add('active-section');
     
         window.addEventListener('hashchange', function() {
-            const hash = window.location.hash || '#details';
+            const hash = window.location.hash;
             
             document.querySelectorAll('.sidebar a').forEach(link => {
                 link.classList.remove('active');

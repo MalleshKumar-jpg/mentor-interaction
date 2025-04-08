@@ -151,9 +151,7 @@ void load_users_from_file() {
         
         // Note the order matches the fprintf in save_users_to_file
         sscanf(line, "%[^,],%[^,],%[^,],%[^,],%d,%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,]", 
-            username, password, name, email, &role,
-            phone, department, year, digital_id, reg_no, 
-            parent_phone, parent_email);
+            username, password, name, email, &role,phone, department, year, digital_id, reg_no, parent_phone, parent_email);
         
         // Add user with all details
         struct User* new_user = (struct User*)malloc(sizeof(struct User));
@@ -184,7 +182,7 @@ void load_users_from_file() {
         // Initialize mentee/mentor specific fields
         if (role == ROLE_MENTOR) {
             new_user->mentee_count = 0;
-            mentor = new_user;
+            mentor = new_user; 
         } else {
             new_user->mentee_count = 0;
         }
@@ -873,7 +871,7 @@ void edit_mentee_details(struct User* mentee) {
         if (is_valid_email(input)) {
             strcpy(mentee->parent_email, input);
         } else {
-            printf("Invalid email format. Parent email remains unchanged.\n");
+            printf("Invalid email format. Parent email remains unchanged.\n"); 
         }
     } 
     
