@@ -768,11 +768,12 @@ void edit_mentee_details(struct User* mentee) {
     printf("Current Name: %s\n", mentee->name);
     printf("New Name (or press Enter to keep current): ");
     scanf("%[^\n]", input); 
-
+	
     if (strlen(input) > 0) {
         strcpy(mentee->name, input);
     }
     
+    strcpy(input,"");
     getchar();
     printf("\nCurrent Email: %s\n", mentee->email);
     printf("New Email (or press Enter to keep current): ");
@@ -786,6 +787,7 @@ void edit_mentee_details(struct User* mentee) {
         }
     }
     
+    strcpy(input,"");
     getchar();
     printf("\nCurrent Phone: %s\n", mentee->phone);
     printf("New Phone (or press Enter to keep current): ");
@@ -799,6 +801,7 @@ void edit_mentee_details(struct User* mentee) {
         }
     }
     
+    strcpy(input,"");
     getchar();
     printf("\nCurrent Department: %s\n", mentee->department);
     printf("New Department (or press Enter to keep current): ");
@@ -808,6 +811,7 @@ void edit_mentee_details(struct User* mentee) {
         strcpy(mentee->department, input);
     }
     
+    strcpy(input,"");
     getchar();
     printf("\nCurrent Year of Study: %s\n", mentee->year);
     printf("New Year of Study (or press Enter to keep current): ");
@@ -817,6 +821,7 @@ void edit_mentee_details(struct User* mentee) {
         strcpy(mentee->year, input);
     }
     
+    strcpy(input,"");
     getchar();
     printf("\nCurrent Digital ID: %s\n", mentee->digital_id);
     printf("New Digital ID (7 digits, or press Enter to keep current): ");
@@ -830,6 +835,7 @@ void edit_mentee_details(struct User* mentee) {
         }
     }
     
+    strcpy(input,"");
     getchar();
     printf("\nCurrent Registration Number: %s\n", mentee->reg_no);
     printf("New Registration Number (13 digits, or press Enter to keep current): ");
@@ -843,6 +849,7 @@ void edit_mentee_details(struct User* mentee) {
         }
     }
     
+    strcpy(input,"");
     getchar();
     printf("\nCurrent Parent Phone: %s\n", mentee->parent_phone);
     printf("New Parent Phone (or press Enter to keep current): ");
@@ -856,6 +863,7 @@ void edit_mentee_details(struct User* mentee) {
         }
     }
     
+    strcpy(input,"");
     getchar();
     printf("\nCurrent Parent Email: %s\n", mentee->parent_email);
     printf("New Parent Email (or press Enter to keep current): ");
