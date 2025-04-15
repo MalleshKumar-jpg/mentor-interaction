@@ -15,7 +15,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
-            background-color: #f8f9fa;
+            background-color: #F5F7F8;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -26,28 +26,28 @@
         }
 
         .header {
-            background: linear-gradient(to right, #001f3f, #0074D9);
+            background: linear-gradient(to right, #006064, #00838F);
             color: white;
             padding: 20px;
             font-size: 24px;
             font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 8px rgba(0, 96, 100, 0.3);
         }
 
         .greeting {
             font-size: 28px;
             margin: 40px 0 20px;
-            color: #333;
+            color: #37474F;
         }
 
         .mentees-section {
-            border-top: 2px solid #0074D9;
+            border-top: 2px solid #00838F;
             margin: 20px auto;
             padding-top: 20px;
             width: 80%;
             font-size: 22px;
             font-weight: bold;
-            color: #001f3f;
+            color: #006064;
         }
 
         .mentees-container {
@@ -56,10 +56,12 @@
             margin: 40px auto;
             max-width: 1200px;
             padding: 0 20px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .mentee-card {
-            background: linear-gradient(to top, #0074D9, #00a8e8);
+            background: linear-gradient(135deg, #006064, #00838F);
             padding: 30px;
             border-radius: 15px;
             width: 200px;
@@ -67,7 +69,7 @@
             font-size: 18px;
             font-weight: bold;
             color: white;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 96, 100, 0.3);
             transition: all 0.4s ease-in-out;
             display: flex;
             flex-direction: column;
@@ -82,13 +84,18 @@
             border: 3px solid white;
             background-color: white;
             padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s;
         }
 
         .mentee-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 96, 100, 0.4);
         }
 
+        .mentee-card:hover img {
+            transform: scale(1.05);
+        }
 
         .mentee-card p {
             margin-top: 10px;
@@ -131,7 +138,7 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            background-color: #f44336;
+            background-color: #C62828;
             color: white;
             border: none;
             padding: 8px 15px;
@@ -143,8 +150,9 @@
         }
 
         .logout-button:hover {
-            background-color: #d32f2f;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: #B71C1C;
+            box-shadow: 0 4px 8px rgba(198, 40, 40, 0.3);
+            transform: translateY(-2px);
         }
     </style>
 </head>

@@ -14,16 +14,17 @@ body {
   display: flex;
   height: 100vh;
   overflow-x: hidden;
+  background-color: #F5F7F8;
 }
 
 .sidebar {
   width: 200px;
   height: 100vh;
   position: fixed;
-  background-color: darkgreen;
+  background-color: #006064;
   display: flex;
   flex-direction: column;
-  border-right: 2px solid black;
+  border-right: 2px solid #37474F;
   padding-top: 54px;
   padding-bottom: 60px;
   overflow-y: auto;
@@ -32,33 +33,37 @@ body {
 
 .sidebar a {
   padding: 20px;
-  background-color: green;
+  background-color: #006064;
   color: white;
   text-decoration: none;
   font-weight: bold;
   transition: 0.4s;
-  border-top: 1px solid black;
+  border-top: 1px solid #37474F;
 }
 
+.sidebar a:hover {
+  background-color: #8A62D9;
+}
 
 .logout-nav {
   margin-top: auto;
-  background-color: #f44336;
+  background-color: #C62828 !important;
 }
 
 .logout-nav:hover {
-  background-color: #d32f2f;
+  background-color: #B71C1C !important;
 }
+
 .sidebar a.active {
-  background-color: yellow;
-  color: black;
+  background-color: #FFB300;
+  color: #37474F;
 }
 
 #mentee-name {
   text-align: center;
   padding: 20px;
-  background-color: lavender;
-  color: black;
+  background-color: #ECEFF1;
+  color: #37474F;
   width: 100%;
   box-sizing: border-box;
   font-weight: bold;
@@ -73,7 +78,7 @@ body {
 }
 
 .header {
-  background: linear-gradient(to right, #001f3f, #0074D9);
+  background:  #006064;
   color: white;
   padding: 15px;
   position: fixed;
@@ -83,13 +88,13 @@ body {
   font-weight: bold;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 96, 100, 0.2);
   cursor: pointer;
   transition: background 0.3s;
 }
 
 .mentor-only-btn .header:hover {
-  background: linear-gradient(to right, #00284d, #0088ff);
+  background:#006064;
 }
 
 
@@ -123,21 +128,28 @@ body {
   font-weight: bold;
   margin-right: auto;
   min-width: 180px;
+  color: #37474F;
 }
 
 .input-box {
-  background-color: #f5f5f5;
+  background-color: #ECEFF1;
   padding: 10px;
   border-radius: 5px;
   width: 300px;
   font-weight: bold;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   margin-right: 10px;
   transition: border 0.3s, box-shadow 0.3s;
 }
 
+.input-box:focus {
+  border-color: #006064;
+  box-shadow: 0 0 0 2px rgba(77, 208, 225, 0.3);
+  outline: none;
+}
+
 .save-btn {
-  background-color: #4CAF50;
+  background-color: #2E7D32;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -149,7 +161,7 @@ body {
 }
 
 .edit-btn {
-  background-color: #0074D9;
+  background-color: #006064;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -177,12 +189,13 @@ body {
   margin-bottom: 15px;
   padding: 10px;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #ECEFF1;
   transition: all 0.5s;
 }
 
 .task-container:hover {
-  background-color: #f0f0f0;
+  background-color: #CFD8DC;
+  transform: translateX(5px);
 }
 
 .add-task-container{
@@ -192,7 +205,7 @@ body {
   margin-top: 20px;
   padding: 15px;
   border-radius: 8px;
-  background-color: #e8f5e9;
+  background-color: #E0F2F1;
 }
 
 
@@ -211,11 +224,11 @@ body {
 }
 
 .meeting-card {
-  background-color: #f5f5f5;
+  background-color: #ECEFF1;
   padding: 20px;
   border-radius: 10px;
   text-align: left;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 96, 100, 0.1);
   transition: 0.3s;
   position: relative;
   max-height: 300px;     
@@ -225,8 +238,8 @@ body {
 
 .meeting-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-  background-color: #e8f4fc;
+  box-shadow: 0 8px 15px rgba(0, 96, 100, 0.2);
+  background-color: #CFD8DC;
 }
 
 .meeting-header {
@@ -241,6 +254,7 @@ body {
 .meeting-content {
   position: relative;
   padding-right: 30px;
+  color: #37474F;
 }
 
 .meeting-content p {
@@ -252,39 +266,47 @@ body {
   position: absolute;
   bottom: -10px;
   right: -10px;
-  border: 1px solid orangered;
+  border: 1px solid #C62828;
   cursor: pointer;
   font-size: 20px;
   opacity: 0.7;
   transition: all 0.3s;
   border-radius: 50%;
+  background-color: white;
 }
 
 .delete-meeting:hover {
   opacity: 1;
-  background-color: orange;
+  background-color: #FFB300;
 }
 
 .input-date,
 .meeting-date {
   font-size: 16px;
-  background-color: #f5f5f5;
+  background-color: #ECEFF1;
   padding: 8px;
   border-radius: 5px;
   max-width: 150px;
   font-weight: bold;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
+}
+
+.input-date:focus,
+.meeting-date:focus {
+  border-color: #006064;
+  box-shadow: 0 0 0 2px rgba(77, 208, 225, 0.3);
+  outline: none;
 }
 
 .summary-input {
   width: 100%;
-  background-color: #f5f5f5;
+  background-color: #ECEFF1;
   outline: 0;
   resize: none;
   box-sizing: border-box;
   padding: 12px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   font-family: Verdana, sans-serif;
   min-height: 120px;
   margin-bottom: 15px;
@@ -292,8 +314,8 @@ body {
 }
 
 .summary-input:focus {
-  border-color: #4CAF50;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  border-color: #006064;
+  box-shadow: 0 0 0 2px rgba(77, 208, 225, 0.3);
 }
 .delete-meeting img {
   width: 24px;
@@ -304,22 +326,22 @@ h2 {
   font-size: 32px;
   font-weight: bold;
   margin-top: 80px;
-  color: #001f3f;
+  color: #006064;
   z-index: 10;
-  border-bottom: 2px solid #0074D9;
+  border-bottom: 2px solid #00838F;
   padding-bottom: 10px;
   margin-bottom: 30px;
 }
 
 h3 {
   font-size: 24px;
-  color: #333;
+  color: #37474F;
   margin-top: 40px;
   margin-bottom: 15px;
 }
 
 .delete-task {
-  background-color: #ff4d4d;
+  background-color: #C62828;
   color: white;
   border: none;
   border-radius: 50%;
@@ -335,7 +357,7 @@ h3 {
 }
 
 .delete-task:hover {
-  background-color: #ff0000;
+  background-color: #B71C1C;
 }
 
 .edit-note {
@@ -357,7 +379,7 @@ h3 {
 }
 
 .add-task {
-  background-color: #4CAF50;
+  background-color: #2E7D32;
   color: white;
   border: none;
   border-radius: 50%;
@@ -373,7 +395,7 @@ h3 {
 }
 
 .add-task:hover {
-  background-color: #45a049;
+  background-color: #1B5E20;
   transform: scale(1.1);
 }
 
@@ -389,7 +411,7 @@ h3 {
   background-color: transparent;
   border: none;
   cursor: default;
-  color: #0074D9;
+  color: #006064;
   font-weight: bold;
 }
 
@@ -411,7 +433,7 @@ h3 {
   position: absolute;
   top: 20px;
   right: 20px;
-  background-color: #f44336;
+  background-color: #C62828;
   color: white;
   border: none;
   padding: 8px 15px;
@@ -423,16 +445,17 @@ h3 {
 }  
 
 .logout-button:hover {
-  background-color: #d32f2f;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  background-color: #B71C1C;
+  box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+  transform: translateY(-2px);
 }
 
 .home-button {
   position: absolute;
   top: 20px;
   left: 20px;
-  background-color: #f0f0f0;
-  color: #333;
+  background-color: #ECEFF1;
+  color: #37474F;
   border: none;
   padding: 8px 15px;
   border-radius: 5px;
@@ -442,7 +465,9 @@ h3 {
 } 
 
 .home-button:hover {
-  background-color: #ddd;
+  background-color: #CFD8DC;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 96, 100, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -486,7 +511,7 @@ h3 {
   .meeting-card {
      max-height: none;
    }
-} 
+}
 </style>
 </head>
 

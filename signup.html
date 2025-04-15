@@ -10,12 +10,16 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            background-color: #F5F7F8;
         }
         .signup-container {
             width: 100%;
             max-width: 400px;
-            padding: 20px;
-            text-align:center;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(106, 90, 205, 0.2);
+            background-color: white;
         }
         .form-group {
             display: flex;
@@ -26,38 +30,70 @@
             width: 100px;
             text-align: right;
             margin-right: 20px;
+            color: #37474F;
+            font-weight: 600;
         }
         input {
-            padding: 10px;
+            padding: 12px;
             border: none;
-            background-color: lightgray;
-            border-radius: 20px;
+            background-color: #ECEFF1;
+            border-radius: 8px;
+            width: 100%;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        input:focus {
+            background-color: #CFD8DC;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(77, 208, 225, 0.3);
         }
         .signup-button {
             display: block;
-            width: 120px;
-            margin: 20px auto;
-            padding: 10px;
-            background: blue;
+            width: 150px;
+            margin: 25px auto;
+            padding: 12px;
+            background: linear-gradient(to right, #6A5ACD, #00838F);
             color: white;
             border: none;
-            border-radius: 20px;
+            border-radius: 8px;
             cursor: pointer;
             text-align: center;
             transition: all 0.3s;
+            font-weight: 600;
         }
 
         .signup-button:hover {
-            background-color: navy;
+            background: linear-gradient(to right, #006064, #00838F);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(77, 208, 225, 0.3);
             text-decoration: none;
         }
         
         a {
-            color: #000;
+            color: #6A5ACD;
             text-decoration: none;
+            transition: color 0.3s;
         }
         a:hover {
+            color: #00838F;
             text-decoration: underline;
+        }
+        
+        h2 {
+            color: #37474F;
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #6A5ACD, #00838F);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
         }
         
         .footer {
@@ -83,14 +119,15 @@
         }
         
         .login-link {
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 14px;
+            color: #666;
         }
     </style>
 </head>
 <body id="signup-page">
     <div class="signup-container">
-    <h2 style="text-decoration:underline">SIGN UP</h2>
+    <h2>SIGN UP</h2>
         <form id="signup-form">
             <div class="form-group">
                 <label for="fullname">Full Name:</label>
