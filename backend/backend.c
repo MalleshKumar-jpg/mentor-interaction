@@ -972,11 +972,8 @@ void add_task(struct User* mentee) {
     if (mentee->tasks == NULL) {
         mentee->tasks = new_task;
     } else {
-        struct Task* current = mentee->tasks;
-        while (current->next != NULL) {
-            current = current->next;
-        }
-        current->next = new_task;
+    	new_task->next = mentee->tasks;
+		mentee->tasks = new_task;
     }
     
     printf("\nTask added successfully!\n");
@@ -1196,11 +1193,8 @@ void add_meeting(struct User* mentee) {
     if (mentee->meetings == NULL) {
         mentee->meetings = new_meeting;
     } else {
-        struct Meeting_note* current = mentee->meetings;
-        while (current->next != NULL) {
-            current = current->next;
-        }
-        current->next = new_meeting;
+    	new_meeting->next = mentee->meetings;
+		mentee->meetings = new_meeting;
     }
     
     printf("\nMeeting note added successfully!\n");

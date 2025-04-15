@@ -170,7 +170,7 @@ function addTask(button) {
         <button class="delete-task mentor-only-btn">X</button>
     `;
 
-    document.querySelector('.progress-container').appendChild(newTask);
+    document.querySelector('#progress h3').insertAdjacentElement('afterend', newTask);
     
     newTask.querySelector('.edit-task').addEventListener('click', function() {
         editOrSaveTasks(this);
@@ -275,6 +275,7 @@ function addMeeting() {
         document.querySelector('#meeting-date').focus();
         return;
     }
+
     const newMeetingCard = document.createElement('div');
     newMeetingCard.classList.add('meeting-card');
     newMeetingCard.innerHTML = `
@@ -290,8 +291,7 @@ function addMeeting() {
         </div>
     `;
 
-    const meetingHistory = document.querySelector('.meeting-history');
-    meetingHistory.insertBefore(newMeetingCard, meetingHistory.firstChild);
+    document.querySelector('.meeting-history').appendChild(newMeetingCard);
 
     newMeetingCard.querySelector('.edit-note').addEventListener('click', function() {
         editOrSaveMeeting(this);
